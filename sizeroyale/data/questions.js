@@ -70,6 +70,7 @@ add('vehicles', '🚀', 'Length', 'How long is a Space Shuttle orbiter?', 'Overa
 add('vehicles', '🚀', 'Height', 'How tall was the Saturn V rocket?', 'Total height of the Apollo-era launch vehicle with spacecraft.', 110.6, 'medium', 'Saturn V carried astronauts to the Moon.', 'Wikipedia – Saturn V', W('Saturn_V'));
 add('vehicles', '🛳️', 'Length', 'How long is the Queen Mary 2?', 'Overall length of the ocean liner.', 345, 'hard', 'It is one of the largest ocean liners ever built.', 'Wikipedia – Queen Mary 2', W('RMS_Queen_Mary_2'));
 add('vehicles', '✈️', 'Length', 'How long is a Boeing 737-800?', 'Overall fuselage length.', 39.5, 'medium', 'The 737 family is the best-selling commercial jet airliner.', 'Wikipedia – Boeing 737 Next Generation', W('Boeing_737_Next_Generation'));
+add('vehicles', '🚌', 'Length', 'How long is a typical full-size school bus?', 'Approximate overall length of a full-size US school bus (about 40 feet).', 12.2, 'easy', 'School buses come in several sizes; this is a representative full-size bus length.', 'Wikipedia – School bus', W('School_bus'));
 
 // ---------- EVERYDAY OBJECTS ----------
 add('everyday-objects', '🏀', 'Diameter', 'What is the diameter of a basketball?', 'Diameter of an official men\'s basketball (29.5 in circumference).', 0.239, 'easy', 'The official circumference is 29.5 inches.', 'Wikipedia – Basketball (ball)', W('Basketball_(ball)'));
