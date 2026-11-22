@@ -80,7 +80,7 @@
   const TABS = [['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/leaderboard', 'Leaderboard', '🏅'], ['/profile', 'Profile', '👤']];
   const isActive = (href, p) => (href === '/' ? p === '/' : p === href || p.startsWith(href + '/'));
   function renderChrome(p) {
-    $('#navDesktop').innerHTML = NAV.map(([h, l, i]) => `<a href="${h}" data-link class="${isActive(h, p) ? 'active' : ''}"${isActive(h, p) ? ' aria-current="page"' : ''}><span aria-hidden="true">${i}</span>${l}</a>`).join('');
+    $('#navDesktop').innerHTML = NAV.map(([h, l]) => `<a href="${h}" data-link class="${isActive(h, p) ? 'active' : ''}"${isActive(h, p) ? ' aria-current="page"' : ''}>${l}</a>`).join('');
     const tabP = p === '/login' || p === '/signup' || p === '/stats' || p === '/history' ? '/profile' : p;
     $('#tabbar').innerHTML = TABS.map(([h, l, i]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}"><span aria-hidden="true">${i}</span>${l}</a>`).join('');
     $('#authSlot').innerHTML = S.user ? `<a class="av" href="/profile" data-link aria-label="Profile" title="${esc(S.user.username)}">${esc(S.user.avatar)}</a>` : `<a class="btn sm" href="/login" data-link>Sign In</a><a class="btn sm signup-top" href="/signup" data-link>Sign Up</a>`;
