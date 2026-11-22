@@ -1,15 +1,16 @@
 /* Per-route SEO metadata. One distinct search intent per URL (see docs/seo-keyword-map.csv). */
 const FAQ = [
   ['How does SizeRoyale scoring work?', 'Each guess is compared with the real value on a logarithmic scale: S = max(0, 1000 × (1 − |ln(g/a)| / ln 2)). An exact guess scores 1,000 points; guessing half or double the real size scores 0.'],
-  ['Is SizeRoyale free to play?', 'Yes. Daily Challenge, Unlimited Play and Friends Battle are free. An account is only needed to save results and appear on leaderboards.'],
+  ['Is SizeRoyale free to play?', 'Yes. Daily Challenge, Unlimited Play, Size Comparison and Friends Battle are free. An account is only needed to save results and appear on leaderboards.'],
   ['How does the Daily Challenge work?', 'Every day (UTC) everyone gets the same five questions in the same order. You get one attempt per day, for a maximum of 5,000 points.'],
   ['Can I play with friends?', 'Yes. Create a private room, share the code or invite link, and play five timed rounds with 1–3 friends. The server controls the timer and scoring.'],
   ['Can I use feet and miles instead of meters?', 'Yes. Switch between metric and US customary units at any time; scoring always compares guesses in the same canonical unit.'],
+  ['What is the Size Comparison game?', 'Choose which of two real-world things has the greater measurement across five head-to-head rounds. Each correct answer earns 1,000 points, and every pair compares the same measurement type.'],
   ['Where do the sizes come from?', 'Each question lists its source and the exact measurement definition (length, height, wingspan, diameter or depth).'],
 ];
 const R = {
   '/': { title: 'SizeRoyale – Guess the Size Game | Guess. Compete. Dominate.', h1: 'Guess the Size. Challenge Your Knowledge.', description: 'Play SizeRoyale, a free guess-the-size game. Test real-world size comparisons, take the Daily Challenge, battle friends and climb the leaderboard.', faq: FAQ },
-  '/play': { title: 'Play SizeRoyale – Choose a Game Mode', h1: 'Choose a game mode', description: 'Pick Daily Challenge, Unlimited Play or Friends Battle, then choose a category and difficulty.' },
+  '/play': { title: 'Play SizeRoyale – Choose a Game Mode', h1: 'Choose a game mode', description: 'Choose Daily Challenge, Unlimited Play, the five-round Size Comparison game or Friends Battle, then test your size knowledge.' },
   '/guess-the-size': { title: 'Guess the Size Game – How It Works | SizeRoyale', h1: 'Guess the Size game', description: 'A guess-the-size game with verified measurements: guess the real size of animals, planets, landmarks and objects and score up to 1,000 points per question.' },
   '/size-comparison': { title: 'Size Comparison Game – Which Is Bigger? | SizeRoyale', h1: 'Size comparison game', description: 'Play the free SizeRoyale size comparison game. Choose which of two real-world things is bigger across five rounds, earn points and explore sourced measurements.' },
   '/daily-challenge': { title: 'Daily Guess the Size Challenge | SizeRoyale', h1: 'Daily Challenge', description: 'Five new size questions every day, the same for everyone. One attempt, 5,000 points max, daily leaderboard and streaks.' },
