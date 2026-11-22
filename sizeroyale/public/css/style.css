@@ -270,3 +270,20 @@ th{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.
   .tabbar+.toast{bottom:30px}
 }
 @media (min-width:1000px) and (max-width:1180px){.nav-desktop a{padding:9px 10px;font-size:.85rem}}
+
+/* install guide popup */
+.install-guide{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:18px}
+.install-guide-bg{position:absolute;inset:0;background:rgba(3,4,18,.78);backdrop-filter:blur(7px)}
+.install-guide-card{position:relative;width:min(100%,440px);max-height:min(88vh,720px);overflow:auto;padding:26px 22px 20px;border-radius:24px;background:linear-gradient(155deg,#20224a,#101128 75%);border:1px solid rgba(135,60,250,.55);box-shadow:0 24px 90px rgba(0,0,0,.65),0 0 36px rgba(135,60,250,.18);text-align:center}
+.install-guide-close{position:absolute;right:14px;top:12px;width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.08);font-size:1.5rem;color:var(--muted)}
+.install-guide-mark{width:54px;height:54px;margin:0 auto 10px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(135deg,#FFC94A,#ff9d2e);color:#251500;font-size:2rem;box-shadow:0 8px 24px rgba(255,201,74,.2)}
+.install-guide-kicker{font-size:.68rem;letter-spacing:.16em;font-weight:800;color:var(--gold)}
+.install-guide-card h2{font-size:1.45rem;margin:8px 26px 8px}
+.install-guide-intro{font-size:.9rem;color:#d6d4ee;margin:0 auto 18px;max-width:340px}
+.install-guide-card ol{list-style:none;padding:0;margin:0;text-align:left;counter-reset:install-step;display:grid;gap:10px}
+.install-guide-card li{counter-increment:install-step;display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:13px;background:rgba(7,8,23,.58);border:1px solid rgba(255,255,255,.07);font-size:.88rem;color:#f1efff}
+.install-guide-card li::before{content:counter(install-step);flex:none;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:rgba(135,60,250,.3);color:#fff;font-weight:800;font-size:.78rem}
+.install-guide-tip{margin:14px 0 12px;color:var(--muted);font-size:.72rem}
+.install-guide-actions{display:grid;gap:9px}
+.install-guide-actions .btn{min-height:44px}
+@media(max-width:380px){.install-guide{padding:12px}.install-guide-card{padding:22px 15px 16px}.install-guide-card h2{font-size:1.28rem}}
