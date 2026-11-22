@@ -138,7 +138,7 @@
       for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
         if (items[i].id !== items[j].id) {
           const ratio = Math.max(items[i].meters, items[j].meters) / Math.min(items[i].meters, items[j].meters);
-          candidates.push({ pair: [items[i], items[j]], ratio });
+          if (ratio > 1.01) candidates.push({ pair: [items[i], items[j]], ratio });
         }
       }
     });
