@@ -77,12 +77,17 @@
 
   /* ---------- chrome: nav, tab bar, drawer, footer ---------- */
   const NAV = [['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Multiplayer'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore']];
-  const TABS = [['/', 'Home'], ['/play', 'Play'], ['/leaderboard', 'Leaderboard'], ['/profile', 'Profile']];
+  const TABS = [
+    ['/', 'Home', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>'],
+    ['/play', 'Play', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 3.8 5l-1.1 3.7a2 2 0 0 1-3.3 1L14 15H10l-3.4 2.7a2 2 0 0 1-3.3-1L2.2 13A4 4 0 0 1 6 8Z"/><path d="M7 11v4M5 13h4M16 12h.01M19 14h.01"/></svg>'],
+    ['/leaderboard', 'Leaderboard', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4v2a4 4 0 0 0 4 4M16 6h4v2a4 4 0 0 1-4 4M12 13v5M8 21h8M9 18h6"/></svg>'],
+    ['/profile', 'Profile', '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>']
+  ];
   const isActive = (href, p) => (href === '/' ? p === '/' : p === href || p.startsWith(href + '/'));
   function renderChrome(p) {
     $('#navDesktop').innerHTML = NAV.map(([h, l]) => `<a href="${h}" data-link class="${isActive(h, p) ? 'active' : ''}"${isActive(h, p) ? ' aria-current="page"' : ''}>${l}</a>`).join('');
     const tabP = p === '/login' || p === '/signup' || p === '/stats' || p === '/history' ? '/profile' : p;
-    $('#tabbar').innerHTML = TABS.map(([h, l]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}">${l}</a>`).join('');
+    $('#tabbar').innerHTML = TABS.map(([h, l, icon]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}" aria-label="${l}"><span class="tab-icon">${icon}</span><span class="tab-label">${l}</span></a>`).join('');
     $('#authSlot').innerHTML = S.user ? `<a class="av" href="/profile" data-link aria-label="Profile" title="${esc(S.user.username)}">${esc(S.user.avatar)}</a>` : `<a class="btn sm" href="/login" data-link>Sign In</a><a class="btn sm signup-top" href="/signup" data-link>Sign Up</a>`;
     $('#unitBtn').textContent = S.system === 'us' ? 'ft' : 'm';
     $('#soundBtn').textContent = S.sound ? '🔊' : '🔇';
