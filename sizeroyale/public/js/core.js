@@ -77,18 +77,18 @@
 
   /* ---------- chrome: nav, tab bar, drawer, footer ---------- */
   const NAV = [['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/daily-challenge', 'Daily Challenge', '🏆'], ['/multiplayer', 'Multiplayer', '👥'], ['/leaderboard', 'Leaderboard', '📊'], ['/explore', 'Explore', '🧭']];
-  const TABS = [['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/leaderboard', 'Leaderboard', '🏅'], ['/profile', 'Profile', '👤']];
+  const TABS = [['/', 'Home'], ['/play', 'Play'], ['/leaderboard', 'Leaderboard'], ['/profile', 'Profile']];
   const isActive = (href, p) => (href === '/' ? p === '/' : p === href || p.startsWith(href + '/'));
   function renderChrome(p) {
     $('#navDesktop').innerHTML = NAV.map(([h, l]) => `<a href="${h}" data-link class="${isActive(h, p) ? 'active' : ''}"${isActive(h, p) ? ' aria-current="page"' : ''}>${l}</a>`).join('');
     const tabP = p === '/login' || p === '/signup' || p === '/stats' || p === '/history' ? '/profile' : p;
-    $('#tabbar').innerHTML = TABS.map(([h, l, i]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}"><span aria-hidden="true">${i}</span>${l}</a>`).join('');
+    $('#tabbar').innerHTML = TABS.map(([h, l]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}">${l}</a>`).join('');
     $('#authSlot').innerHTML = S.user ? `<a class="av" href="/profile" data-link aria-label="Profile" title="${esc(S.user.username)}">${esc(S.user.avatar)}</a>` : `<a class="btn sm" href="/login" data-link>Sign In</a><a class="btn sm signup-top" href="/signup" data-link>Sign Up</a>`;
     $('#unitBtn').textContent = S.system === 'us' ? 'ft' : 'm';
     $('#soundBtn').textContent = S.sound ? '🔊' : '🔇';
     $('#drawer').innerHTML = `<button class="icon-btn close" id="drawerClose" aria-label="Close menu">✕</button>
       <div class="who"><div class="av">${S.user ? esc(S.user.avatar) : '👑'}</div><div><b>${S.user ? esc(S.user.username) : 'Guest player'}</b><div class="note">${S.user ? 'Signed in' : 'Sign in to save progress'}</div></div></div>
-      ${[['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/daily-challenge', 'Daily Challenge', '🏆'], ['/multiplayer', 'Friends Battle', '👥'], ['/leaderboard', 'Leaderboard', '📊'], ['/explore', 'Explore', '🧭'], ['/learn', 'Learn', '🎓'], ['/profile', 'Profile', '👤'], ['/faq', 'Help & FAQ', '❓']].map(([h, l, i]) => `<a href="${h}" data-link><span>${i}</span>${l}</a>`).join('')}
+      ${[['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Friends Battle'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore'], ['/learn', 'Learn'], ['/profile', 'Profile'], ['/faq', 'Help & FAQ']].map(([h, l]) => `<a href="${h}" data-link>${l}</a>`).join('')}
       ${S.user ? '<button class="btn ghost block item-logout" id="logoutBtn" style="margin-top:12px">Log out</button>' : '<a class="btn block" href="/login" data-link style="margin-top:12px">Sign In</a><a class="btn ghost block" href="/signup" data-link>Sign Up</a>'}
       <button class="btn blue block install-app" id="installBtn" type="button">＋ Add to Mobile</button>`;
     $('#drawerClose').onclick = closeDrawer;
