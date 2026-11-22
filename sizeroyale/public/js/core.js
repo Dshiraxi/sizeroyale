@@ -83,18 +83,50 @@
     $('#navDesktop').innerHTML = NAV.map(([h, l, i]) => `<a href="${h}" data-link class="${isActive(h, p) ? 'active' : ''}"${isActive(h, p) ? ' aria-current="page"' : ''}><span aria-hidden="true">${i}</span>${l}</a>`).join('');
     const tabP = p === '/login' || p === '/signup' || p === '/stats' || p === '/history' ? '/profile' : p;
     $('#tabbar').innerHTML = TABS.map(([h, l, i]) => `<a href="${h}" data-link class="${isActive(h, tabP) ? 'active' : ''}"><span aria-hidden="true">${i}</span>${l}</a>`).join('');
-    $('#authSlot').innerHTML = S.user ? `<a class="av" href="/profile" data-link aria-label="Profile" title="${esc(S.user.username)}">${esc(S.user.avatar)}</a>` : `<a class="btn sm" href="/login" data-link>Sign In</a>`;
+    $('#authSlot').innerHTML = S.user ? `<a class="av" href="/profile" data-link aria-label="Profile" title="${esc(S.user.username)}">${esc(S.user.avatar)}</a>` : `<a class="btn sm" href="/login" data-link>Sign In</a><a class="btn sm signup-top" href="/signup" data-link>Sign Up</a>`;
     $('#unitBtn').textContent = S.system === 'us' ? 'ft' : 'm';
     $('#soundBtn').textContent = S.sound ? '🔊' : '🔇';
     $('#drawer').innerHTML = `<button class="icon-btn close" id="drawerClose" aria-label="Close menu">✕</button>
       <div class="who"><div class="av">${S.user ? esc(S.user.avatar) : '👑'}</div><div><b>${S.user ? esc(S.user.username) : 'Guest player'}</b><div class="note">${S.user ? 'Signed in' : 'Sign in to save progress'}</div></div></div>
       ${[['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/daily-challenge', 'Daily Challenge', '🏆'], ['/multiplayer', 'Friends Battle', '👥'], ['/leaderboard', 'Leaderboard', '📊'], ['/explore', 'Explore', '🧭'], ['/learn', 'Learn', '🎓'], ['/profile', 'Profile', '👤'], ['/faq', 'Help & FAQ', '❓']].map(([h, l, i]) => `<a href="${h}" data-link><span>${i}</span>${l}</a>`).join('')}
-      ${S.user ? '<button class="btn ghost block item-logout" id="logoutBtn" style="margin-top:12px">Log out</button>' : '<a class="btn block" href="/login" data-link style="margin-top:12px">Sign In</a>'}`;
+      ${S.user ? '<button class="btn ghost block item-logout" id="logoutBtn" style="margin-top:12px">Log out</button>' : '<a class="btn block" href="/login" data-link style="margin-top:12px">Sign In</a><a class="btn ghost block" href="/signup" data-link>Sign Up</a>'}
+      <button class="btn blue block install-app" id="installBtn" type="button">＋ Add to Mobile</button>`;
     $('#drawerClose').onclick = closeDrawer;
+    const installButton = $('#installBtn');
+    if (installButton) installButton.onclick = installApp;
     const lo = $('#logoutBtn'); if (lo) lo.onclick = logout;
     $('#footer').innerHTML = `<div><b style="color:#fff">SizeRoyale</b> – Guess. Compete. Dominate.</div>
       <nav aria-label="Footer"><a href="/guess-the-size" data-link>Guess the Size</a><a href="/size-comparison" data-link>Size Comparison</a><a href="/unlimited" data-link>Unlimited</a><a href="/learn" data-link>Learn</a><a href="/how-to-play" data-link>How to Play</a><a href="/faq" data-link>FAQ</a><a href="/about" data-link>About</a><a href="/contact" data-link>Contact</a><a href="/privacy" data-link>Privacy</a><a href="/terms" data-link>Terms</a></nav>
       <div class="note">SizeRoyale is an independent game and is not affiliated with any other size-guessing game, brand or publisher.</div>`;
+  }
+  let deferredInstallPrompt = null;
+  let installPromptReady = false;
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installPromptReady = true;
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    installPromptReady = false;
+    const b = $('#installBtn'); if (b) b.textContent = 'Added to Home Screen ✓';
+  });
+  async function installApp() {
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+      toast('SizeRoyale is already installed.');
+      return;
+    }
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      installPromptReady = false;
+      if (choice && choice.outcome === 'accepted') toast('SizeRoyale is being added to your device.');
+      else toast('You can install SizeRoyale whenever you are ready.');
+      return;
+    }
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    toast(isIOS ? 'Tap Share in Safari, then choose Add to Home Screen.' : 'Open your browser menu and choose Install app or Add to Home Screen.');
   }
   function openDrawer() { $('#drawer').classList.add('open'); $('#drawerBg').classList.add('open'); }
   function closeDrawer() { $('#drawer').classList.remove('open'); $('#drawerBg').classList.remove('open'); }
@@ -197,6 +229,9 @@
     if (S.user && S.user.unitSystem) { S.system = S.user.unitSystem; store.set('sr_units', S.system); }
     if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('/sw.js').catch(() => {});
     render();
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+      const b = $('#installBtn'); if (b) b.textContent = 'Already Installed ✓';
+    }
   }
 
   window.SRApp = { S, api, $, $$, esc, store, view, go, render, register, toast, onLeave, setTitle, boot, refreshUser, sfx, confetti, fmt, fmtLen, fmtBoth, lenParts, catBy, guessUI, bindGuess, resultCard, animateResult, runQuiz, summaryCard, qArt, tip, unitsList };
