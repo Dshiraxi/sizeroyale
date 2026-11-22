@@ -10,7 +10,7 @@ const { QUESTIONS, CATEGORIES } = require('./data/questions');
 const { ROUTES, FAQ } = require('./lib/seo');
 
 const PORT = Number(process.env.PORT || 3000);
-const SITE = (process.env.SITE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
+const SITE = (process.env.SITE_URL || 'https://sizeroyale.fun').replace(/\/$/, '');
 const DB_FILE = process.env.DB_FILE || path.join(__dirname, 'data', 'db.json');
 const PUBLIC = path.join(__dirname, 'public');
 const ROUND_SEC = Number(process.env.ROUND_SEC || 20);
