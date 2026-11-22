@@ -53,11 +53,12 @@
   /* ---------------- PLAY / MODES / CATEGORY SELECTION ---------------- */
   register('/play', async () => {
     setTitle('Play'); const cats = S.meta.categories;
-    view(`${crumbs(['', 'Play'])}<h1>Choose how to <span class="grad">play</span></h1><p class="muted" style="margin:8px 0 18px">Three ways to test your size sense.</p>
+    view(`${crumbs(['', 'Play'])}<h1>Choose how to <span class="grad">play</span></h1><p class="muted" style="margin:8px 0 18px">Four ways to test your size sense.</p>
     <div class="pick">
       <a class="opt" href="/daily-challenge" data-link><span class="e">🏆</span><span><b>Daily Challenge</b><br><span class="muted">5 questions, same for everyone, one attempt. Max 5,000 points.</span></span></a>
       <a class="opt" href="/unlimited" data-link><span class="e">🎮</span><span><b>Unlimited Play</b><br><span class="muted">Pick a category and difficulty. Play as long as you like.</span></span></a>
-      <a class="opt" href="/multiplayer" data-link><span class="e">👥</span><span><b>Friends Battle</b><br><span class="muted">Private rooms for 2–4 players, 5 live timed rounds.</span></span></a></div>
+      <a class="opt" href="/multiplayer" data-link><span class="e">👥</span><span><b>Friends Battle</b><br><span class="muted">Private rooms for 2–4 players, 5 live timed rounds.</span></span></a>
+      <a class="opt" href="/size-comparison" data-link><span class="e">⚖️</span><span><b>Size Comparison</b><br><span class="muted">Pick which of two real-world things is bigger. Five head-to-head rounds.</span></span></a></div>
     <section class="sec"><h2>Pick a category</h2><div class="cats">${cats.map((c) => `<a class="cat" href="${c.path}" data-link style="background:${c.grad}"><span class="emo" aria-hidden="true">${c.icon}</span><b>${esc(c.name)}</b><small>${c.questions} questions</small><span class="arrow">→</span></a>`).join('')}</div></section>
     <section class="sec card"><h2>Difficulty levels</h2><p class="muted"><b>Easy</b> – familiar things (a basketball, Everest). <b>Medium</b> – well known but harder to picture. <b>Hard</b> – extreme or unusual sizes. Difficulty is set per question in the verified question bank.</p></section>`);
   });
@@ -126,20 +127,57 @@
     <h2>Play with friends</h2><p>Create a private room and race up to three friends over five timed rounds in <a href="/multiplayer" data-link style="text-decoration:underline">Friends Battle</a>.</p></div>`);
   });
 
-  /* ---------------- SIZE COMPARISON ---------------- */
-  register('/size-comparison', async (_, q) => {
-    setTitle('Size Comparison Tool'); const fx = await facts(); const sorted = fx.slice().sort((a, b) => a.shortName.localeCompare(b.shortName));
-    let a = q.get('a') || 'animals-001', b = q.get('b') || 'vehicles-001';
+  /* ---------------- SIZE COMPARISON GAME ---------------- */
+  register('/size-comparison', async () => {
+    setTitle('Size Comparison Game'); const fx = await facts(); const sorted = fx.slice().sort((a, b) => a.shortName.localeCompare(b.shortName));
+    const prompts = { Length: 'Which is longer?', Height: 'Which is taller?', Wingspan: 'Which has a wider wingspan?', Diameter: 'Which has a larger diameter?', Depth: 'Which is deeper?' };
+    const groups = new Map();
+    fx.forEach((f) => { if (!groups.has(f.kind)) groups.set(f.kind, []); groups.get(f.kind).push(f); });
+    const candidates = [];
+    groups.forEach((items) => {
+      for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+        if (items[i].category !== items[j].category) candidates.push([items[i], items[j]]);
+      }
+    });
+    const shufflePairs = (items) => { const a = items.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const whale = fx.find((f) => f.id === 'animals-001');
+    const bus = fx.find((f) => f.id === 'vehicles-010');
+    const preferred = whale && bus && whale.kind === bus.kind ? [whale, bus] : null;
+    const firstKey = preferred ? preferred.map((f) => f.id).sort().join('|') : '';
+    const rounds = (preferred ? [preferred] : []).concat(shufflePairs(candidates.filter((pair) => pair.map((f) => f.id).sort().join('|') !== firstKey)).slice(0, 4));
+    let index = 0, points = 0, selected = null;
     const opts = (sel) => sorted.map((f) => `<option value="${f.id}" ${f.id === sel ? 'selected' : ''}>${f.icon} ${esc(f.shortName)} (${esc(f.kind.toLowerCase())})</option>`).join('');
-    view(`${crumbs(['', 'Size comparison'])}<div class="prose"><h1>Size <span class="grad">comparison</span> tool</h1><p>Compare any two things in the SizeRoyale fact base. Every value has a named measurement and source.</p></div>
-      <div class="card" style="max-width:760px;margin:16px auto"><div class="row" style="flex-wrap:nowrap"><div class="field" style="flex:1;margin:0"><label for="cA">Thing A</label><select id="cA">${opts(a)}</select></div><div class="field" style="flex:1;margin:0"><label for="cB">Thing B</label><select id="cB">${opts(b)}</select></div></div><div id="cOut" style="margin-top:18px"></div></div>`);
-    function draw() {
-      a = $('#cA').value; b = $('#cB').value; const A1 = fx.find((f) => f.id === a), B1 = fx.find((f) => f.id === b); const max = Math.max(A1.meters, B1.meters);
+    const renderCompareTool = () => {
+      const a = $('#cA'), b = $('#cB'); if (!a || !b) return;
+      const A1 = fx.find((f) => f.id === a.value), B1 = fx.find((f) => f.id === b.value), max = Math.max(A1.meters, B1.meters);
       const bar = (f, col) => `<div class="cmpbar"><div class="t"><span>${f.icon} <b>${esc(f.shortName)}</b> <span class="muted">(${esc(f.kind.toLowerCase())})</span></span><span>${esc(fmtBoth(f.meters))}</span></div><div class="tr"><i style="width:${Math.max(0.4, (f.meters / max) * 100)}%;background:${col}"></i></div></div>`;
-      const big = A1.meters >= B1.meters ? A1 : B1, small = big === A1 ? B1 : A1; const ratio = big.meters / small.meters;
-      $('#cOut').innerHTML = `${bar(A1, 'linear-gradient(90deg,#35B9FF,#873CFA)')}${bar(B1, 'linear-gradient(90deg,#E84AB7,#FFC94A)')}<p style="margin-top:14px">${A1 === B1 ? 'Same item – pick two different things.' : `<b>${esc(big.shortName)}</b> is about <b class="gold">${fmt(ratio)}×</b> the size of <b>${esc(small.shortName)}</b> (comparing ${esc(big.kind.toLowerCase())} with ${esc(small.kind.toLowerCase())}).`}</p><p class="note">Sources: <a href="${esc(A1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(A1.sourceName)}</a> · <a href="${esc(B1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(B1.sourceName)}</a></p>`;
+      const big = A1.meters >= B1.meters ? A1 : B1, small = big === A1 ? B1 : A1;
+      $('#cOut').innerHTML = `${bar(A1, 'linear-gradient(90deg,#35B9FF,#873CFA)')}${bar(B1, 'linear-gradient(90deg,#E84AB7,#FFC94A)')}<p style="margin-top:14px">${A1.id === B1.id ? 'Same item – pick two different things.' : `<b>${esc(big.shortName)}</b> is about <b class="gold">${fmt(big.meters / small.meters)}×</b> the ${esc(big.kind.toLowerCase())} of <b>${esc(small.shortName)}</b>.`}</p><p class="note">Sources: <a href="${esc(A1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(A1.sourceName)}</a> · <a href="${esc(B1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(B1.sourceName)}</a></p>`;
+    };
+    const shell = (content) => view(`${crumbs(['/play', 'Play'], ['', 'Size Comparison'])}<div class="prose"><span class="pill badge">⚖️ HEAD-TO-HEAD CHALLENGE</span><h1>Size <span class="grad">Comparison</span> Game</h1><p>Two real-world things. One question: which is bigger in the measurement shown? Pick the right answer across five rounds and score up to 5,000 points.</p></div>${content}<details class="card compare-tool-more" style="margin:22px auto;max-width:760px"><summary><b>🔎 Compare any two things</b><span class="note"> · Explore exact measurements and sources</span></summary><div class="row compare-selects" style="margin-top:16px"><div class="field" style="flex:1;margin:0"><label for="cA">Thing A</label><select id="cA">${opts('animals-001')}</select></div><div class="field" style="flex:1;margin:0"><label for="cB">Thing B</label><select id="cB">${opts('vehicles-001')}</select></div></div><div id="cOut" style="margin-top:18px"></div></details>`);
+    function draw() {
+      if (index >= rounds.length) {
+        const grade = points >= 4000 ? 'Size genius!' : points >= 2500 ? 'Great eye!' : 'Keep practicing!';
+        shell(`<div class="game result"><div class="trophy">🏆</div><h2 class="res-title">${grade}</h2><p class="muted">You completed all five comparisons.</p><div class="pts">${points.toLocaleString('en-US')} <span class="note">/ 5,000</span></div><div class="meter"><i style="width:${points / 50}%"></i></div><p class="muted">${points / 1000} out of 5 correct</p><div class="row" style="justify-content:center;margin-top:18px"><button class="btn" id="again">▶ Play again</button><a class="btn ghost" href="/play" data-link>More game modes</a></div></div>`);
+        if (points >= 3000) A.confetti();
+        $('#again').onclick = start; return;
+      }
+      const [a, b] = rounds[index], correct = a.meters >= b.meters ? a : b;
+      const choice = (f, key) => `<button class="compare-choice ${selected === key ? (f.id === correct.id ? 'correct' : 'wrong') : ''} ${selected && f.id === correct.id ? 'answer' : ''}" data-choice="${key}" ${selected ? 'disabled' : ''}><span class="compare-emoji">${f.icon}</span><b>${esc(f.shortName)}</b><small>${esc(f.category.replace(/-/g, ' '))}</small>${selected ? `<strong class="compare-size">${esc(fmtBoth(f.meters))}</strong>` : '<span class="compare-pick">Choose this</span>'}</button>`;
+      let feedback = '';
+      if (selected) {
+        const picked = selected === 'a' ? a : b, isRight = picked.id === correct.id;
+        const ratio = Math.max(a.meters, b.meters) / Math.min(a.meters, b.meters);
+        feedback = `<div class="compare-feedback ${isRight ? 'right' : 'miss'}"><b>${isRight ? '✓ Correct! +1,000 points' : 'Not quite! The correct answer is ' + esc(correct.shortName) + '.'}</b><p>${esc(correct.shortName)} is about ${fmt(ratio)}× the ${esc(correct.kind.toLowerCase())} of ${esc(correct.id === a.id ? b.shortName : a.shortName)}.</p><p class="note">${esc(a.fact || '')}</p><p class="note">Sources: <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.sourceName)}</a> · <a href="${esc(b.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(b.sourceName)}</a></p><button class="btn block" id="next">${index === 4 ? 'See my score' : 'Next comparison →'}</button></div>`;
+      }
+      shell(`<div class="game"><div class="game-top"><span class="prog">ROUND ${index + 1}/5</span><div class="bar"><i style="width:${index * 20}%"></i></div><span class="timer">⭐ ${points.toLocaleString('en-US')}</span></div><div class="card compare-question"><span class="pill">${esc(a.kind.toUpperCase())}</span><h2>${esc(prompts[a.kind] || 'Which has the greater measurement?')}</h2><p class="muted">Choose one answer. Each correct pick earns 1,000 points.</p><div class="compare-options">${choice(a, 'a')}${choice(b, 'b')}</div>${feedback}</div></div>`);
+      if (!selected) $('.compare-choice').forEach((btn) => { btn.onclick = () => { selected = btn.dataset.choice; const picked = selected === 'a' ? a : b; if (picked.id === correct.id) { points += 1000; A.sfx.reveal(1000); } else A.sfx.reveal(0); draw(); }; });
+      else $('#next').onclick = () => { index++; selected = null; draw(); };
     }
-    $('#cA').onchange = $('#cB').onchange = draw; draw();
+    function start() { index = 0; points = 0; selected = null; const next = shufflePairs(candidates); rounds.splice(0, rounds.length, ...(preferred ? [preferred] : []), ...next.filter((pair) => !preferred || pair.map((f) => f.id).sort().join('|') !== firstKey).slice(0, 4)); draw(); }
+    shell(`<div class="game"><div class="card center compare-intro"><div class="compare-intro-icon">⚖️</div><h2>Think you know which is bigger?</h2><p class="muted">Compare animals, vehicles, landmarks and more. Every pair uses the same type of measurement, with real facts and sources.</p><div class="row" style="justify-content:center;margin-top:18px"><span class="pill">5 rounds</span><span class="pill">1,000 points each</span><span class="pill">Free to play</span></div><button class="btn block" id="startCompare" style="margin-top:18px">▶ Start comparison challenge</button></div></div>`);
+    $('#startCompare').onclick = start;
+    const ca = $('#cA'), cb = $('#cB'); if (ca && cb) { ca.onchange = renderCompareTool; cb.onchange = renderCompareTool; renderCompareTool(); }
   });
 
   /* ---------------- DAILY CHALLENGE ---------------- */
