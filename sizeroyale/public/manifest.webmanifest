@@ -1,0 +1,15 @@
+{
+  "name": "SizeRoyale",
+  "short_name": "SizeRoyale",
+  "description": "Guess the size. Compete. Dominate.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070817",
+  "theme_color": "#070817",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

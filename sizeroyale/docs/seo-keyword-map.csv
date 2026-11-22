@@ -1,0 +1,75 @@
+keyword,source,search_volume,keyword_difficulty,cpc,trend,intent,target_page,priority
+guess the size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,navigational/game,/guess-the-size,primary
+guess the size,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,navigational/game,/guess-the-size,primary
+guess the real size,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,navigational/game,/guess-the-size,primary
+guess the real size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,navigational/game,/guess-the-size,primary
+size it up game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor-adjacent game search,/guess-the-size (generic wording only; no brand claims),primary
+guess the size comparison,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,informational/tool,/size-comparison,secondary
+guess the size comparison game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,informational/tool,/size-comparison,secondary
+guess the size game comparison,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,informational/tool,/size-comparison,secondary
+size comparisons,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV","18,100",unavailable,unavailable,+132%,informational/tool,/size-comparison,secondary
+guess the size game online,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game,/guess-the-size,secondary
+guessing the size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game,/guess-the-size,secondary
+guess the size of things game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game,/guess-the-size,secondary
+guessing the size of things game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game,/guess-the-size,secondary
+the impossible size guessing game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game,/guess-the-size,secondary
+daily guess the size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (daily),/daily-challenge,secondary
+size it up game daily,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (daily),/daily-challenge,secondary
+size it up daily game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (daily),/daily-challenge,secondary
+size it up unlimited,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+size it up game unlimited,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+size it up game endless,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+size it up game infinite,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+guess the size unlimited,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+size it up game free,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (endless),/unlimited,secondary
+guess the size game animals,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/animals,supporting
+guess the size animal,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/animals,supporting
+size it up game animals,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/animals,supporting
+animal size comparison game,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV",70,unavailable,unavailable,"+3,068%",category,/animals,supporting
+blue whale size comparison,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV","8,100",unavailable,unavailable,-11%,informational,/size-comparison (+ /animals),supporting
+dinosaur size comparison,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV","1,300",unavailable,unavailable,-4%,informational,/dinosaurs,supporting
+guess the size country,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/geography,supporting
+guess the size of country,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/geography,supporting
+size it up game geography,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category,/geography,supporting
+guess the size multiplayer,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,game (multiplayer),/multiplayer,supporting
+guess the size of fictional character,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category not offered,none – no licensed characters; do not target,excluded
+guess the size game anime,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category not offered,none – no licensed characters; do not target,excluded
+size it up game pop culture,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category not offered,none – no licensed characters; do not target,excluded
+size it up game pokemon,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,category not offered,none – no licensed characters; do not target,excluded
+guess the size ohnepixel,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+guess the size game ohnepixel,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+size it up game magnitudle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+size it up game magnitude,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+magnitude size it up game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+size it up magnitudle,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV",50,unavailable,unavailable,"+4,536%",competitor brand,none – research only; never use brand names,excluded
+magnitudle,"prompt list (no CSV file attached); metrics = historical observation quoted in brief, NOT verified against CSV",720,unavailable,unavailable,"+2,320%",competitor brand,none – research only; never use brand names,excluded
+size it up game nyt,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+sized it up game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+size it up game match the silhouette,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor brand,none – research only; never use brand names,excluded
+guess the belly size baby shower game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,irrelevant intent,none,excluded
+guess the bump size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,irrelevant intent,none,excluded
+guess the size of the baby bump game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,irrelevant intent,none,excluded
+guess the size of the belly game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,irrelevant intent,none,excluded
+guess the bra size game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,irrelevant intent,none,excluded
+plain game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+plain,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+noillirk,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+costcodle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+songless,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+dartle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+krillion io,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+layers game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+sortie game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+layers,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+sortie,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+anything grid,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+wonderhop,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+perceptle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+angle game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+angle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+krillion,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+krillion game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+wordle,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+plane,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+daily games,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded
+plane game,prompt list (no CSV file attached),unavailable,unavailable,unavailable,unavailable,competitor/other games,none – discovery research only,excluded

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /room/
+Sitemap: https://sizeroyalefun.fazedanish5.workers.dev/sitemap.xml
