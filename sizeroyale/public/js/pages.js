@@ -23,6 +23,7 @@
       <div class="mode m-unl"><h3>Unlimited Play</h3><small>Play Anytime</small><span class="big">🎮</span><a class="btn blue sm" href="/unlimited" data-link>▶ Play</a></div>
       <div class="mode m-fr"><h3>Friends Battle</h3><small>1v1 or 2–4 Players</small><span class="big">🛡️</span><a class="btn pink sm" href="/multiplayer" data-link>▶ Play</a></div>
       <div class="mode m-lb"><h3>Global Leaderboard</h3><small>See Who's the Best</small><span class="big">🏆</span><a class="btn green sm" href="/leaderboard" data-link>View Rankings</a></div>
+      <div class="mode m-compare"><h3>Size Comparison</h3><small>Which one is bigger?</small><span class="big">⚖️</span><a class="btn sm" href="/size-comparison" data-link>▶ Compare</a></div>
     </section>
     <div class="home-grid"><div>
       <section class="sec" style="margin-top:0"><div class="sec-head"><h2>⭐ Popular Categories</h2><a href="/play" data-link>View All Categories →</a></div>
