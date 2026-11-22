@@ -136,15 +136,19 @@
     const candidates = [];
     groups.forEach((items) => {
       for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
-        if (items[i].category !== items[j].category) candidates.push([items[i], items[j]]);
+        if (items[i].id !== items[j].id) {
+          const ratio = Math.max(items[i].meters, items[j].meters) / Math.min(items[i].meters, items[j].meters);
+          candidates.push({ pair: [items[i], items[j]], ratio });
+        }
       }
     });
     const shufflePairs = (items) => { const a = items.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-    const whale = fx.find((f) => f.id === 'animals-001');
-    const bus = fx.find((f) => f.id === 'vehicles-010');
-    const preferred = whale && bus && whale.kind === bus.kind ? [whale, bus] : null;
-    const firstKey = preferred ? preferred.map((f) => f.id).sort().join('|') : '';
-    const rounds = (preferred ? [preferred] : []).concat(shufflePairs(candidates.filter((pair) => pair.map((f) => f.id).sort().join('|') !== firstKey)).slice(0, 4));
+    const levels = {
+      easy: { label: 'Easy', hint: 'Big size differences', test: (r) => r >= 5 },
+      medium: { label: 'Medium', hint: 'Look closely', test: (r) => r >= 2 && r < 5 },
+      hard: { label: 'Hard', hint: 'Very close measurements', test: (r) => r < 2 }
+    };
+    let difficulty = 'hard', rounds = [];
     let index = 0, points = 0, selected = null;
     const opts = (sel) => sorted.map((f) => `<option value="${f.id}" ${f.id === sel ? 'selected' : ''}>${f.icon} ${esc(f.shortName)} (${esc(f.kind.toLowerCase())})</option>`).join('');
     const renderCompareTool = () => {
@@ -171,11 +175,30 @@
         feedback = `<div class="compare-feedback ${isRight ? 'right' : 'miss'}"><b>${isRight ? '✓ Correct! +1,000 points' : 'Not quite! The correct answer is ' + esc(correct.shortName) + '.'}</b><p>${esc(correct.shortName)} is about ${fmt(ratio)}× the ${esc(correct.kind.toLowerCase())} of ${esc(correct.id === a.id ? b.shortName : a.shortName)}.</p><p class="note">${esc(a.fact || '')}</p><p class="note">Sources: <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.sourceName)}</a> · <a href="${esc(b.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(b.sourceName)}</a></p><button class="btn block" id="next">${index === 4 ? 'See my score' : 'Next comparison →'}</button></div>`;
       }
       shell(`<div class="game"><div class="game-top"><span class="prog">ROUND ${index + 1}/5</span><div class="bar"><i style="width:${index * 20}%"></i></div><span class="timer">⭐ ${points.toLocaleString('en-US')}</span></div><div class="card compare-question"><span class="pill">${esc(a.kind.toUpperCase())}</span><h2>${esc(prompts[a.kind] || 'Which has the greater measurement?')}</h2><p class="muted">Choose one answer. Each correct pick earns 1,000 points.</p><div class="compare-options">${choice(a, 'a')}${choice(b, 'b')}</div>${feedback}</div></div>`);
-      if (!selected) $('.compare-choice').forEach((btn) => { btn.onclick = () => { selected = btn.dataset.choice; const picked = selected === 'a' ? a : b; if (picked.id === correct.id) { points += 1000; A.sfx.reveal(1000); } else A.sfx.reveal(0); draw(); }; });
+      if (!selected) $$('.compare-choice').forEach((btn) => { btn.onclick = () => { selected = btn.dataset.choice; const picked = selected === 'a' ? a : b; if (picked.id === correct.id) { points += 1000; A.sfx.reveal(1000); } else A.sfx.reveal(0); draw(); }; });
       else $('#next').onclick = () => { index++; selected = null; draw(); };
     }
-    function start() { index = 0; points = 0; selected = null; const next = shufflePairs(candidates); rounds.splice(0, rounds.length, ...(preferred ? [preferred] : []), ...next.filter((pair) => !preferred || pair.map((f) => f.id).sort().join('|') !== firstKey).slice(0, 4)); draw(); }
-    shell(`<div class="game"><div class="card center compare-intro"><div class="compare-intro-icon">⚖️</div><h2>Think you know which is bigger?</h2><p class="muted">Compare animals, vehicles, landmarks and more. Every pair uses the same type of measurement, with real facts and sources.</p><div class="row" style="justify-content:center;margin-top:18px"><span class="pill">5 rounds</span><span class="pill">1,000 points each</span><span class="pill">Free to play</span></div><button class="btn block" id="startCompare" style="margin-top:18px">▶ Start comparison challenge</button></div></div>`);
+    function start() {
+      index = 0; points = 0; selected = null;
+      const eligible = shufflePairs(candidates.filter((item) => levels[difficulty].test(item.ratio)));
+      const selectedPairs = eligible.slice(0, 5);
+      if (selectedPairs.length < 5) {
+        const used = new Set(selectedPairs.map((item) => item.pair.map((f) => f.id).sort().join('|')));
+        const fill = shufflePairs(candidates.filter((item) => !used.has(item.pair.map((f) => f.id).sort().join('|')))).slice(0, 5 - selectedPairs.length);
+        selectedPairs.push(...fill);
+      }
+      rounds = selectedPairs.map((item) => item.pair);
+      draw();
+    }
+    shell(`<div class="game"><div class="card center compare-intro"><div class="compare-intro-icon">⚖️</div><h2>Think you know which is bigger?</h2><p class="muted">Compare animals, vehicles, landmarks and more. Every pair uses the same type of measurement, with real facts and sources.</p><div class="row" style="justify-content:center;margin-top:18px"><span class="pill">5 rounds</span><span class="pill">1,000 points each</span><span class="pill">Free to play</span></div><div class="compare-difficulties" role="group" aria-label="Choose difficulty"><button class="compare-level" data-level="easy"><b>Easy</b><small>Big differences</small></button><button class="compare-level" data-level="medium"><b>Medium</b><small>Look closely</small></button><button class="compare-level active" data-level="hard"><b>Hard</b><small>Very close sizes</small></button></div><p class="note" id="compareLevelHint">Hard mode: compare things with very similar measurements.</p><button class="btn block" id="startCompare" style="margin-top:18px">▶ Start hard challenge</button></div></div>`);
+    $$('.compare-level').forEach((btn) => {
+      btn.onclick = () => {
+        difficulty = btn.dataset.level;
+        $$('.compare-level').forEach((b) => b.classList.toggle('active', b === btn));
+        $('#compareLevelHint').textContent = levels[difficulty].label + ' mode: ' + levels[difficulty].hint + '.';
+        $('#startCompare').textContent = '▶ Start ' + levels[difficulty].label.toLowerCase() + ' challenge';
+      };
+    });
     $('#startCompare').onclick = start;
     const ca = $('#cA'), cb = $('#cB'); if (ca && cb) { ca.onchange = renderCompareTool; cb.onchange = renderCompareTool; renderCompareTool(); }
   });
