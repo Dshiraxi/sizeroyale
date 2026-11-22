@@ -10,10 +10,7 @@
   register('/', async () => {
     setTitle('');
     const m = S.meta; const cats = m.categories;
-    const top = await api('/leaderboard/global').catch(() => ({ rows: [] }));
-    const fx = await facts().catch(() => []); const by = (id) => fx.find((f) => f.id === id);
-    const pairs = [['animals-001', 'dinosaurs-001'], ['geography-001', 'geography-003'], ['space-003', 'space-001']].map(([a, b]) => [by(a), by(b)]).filter((p) => p[0] && p[1]);
-    view(`
+    const app = view(`
     <section class="hero" aria-labelledby="h1">
       <div class="hero-copy"><span class="pill badge">👑 Guess. Compete. Dominate.</span>
         <h1 id="h1">Guess the Size.<br><span class="grad">Challenge Your Knowledge.</span></h1>
@@ -33,10 +30,24 @@
       <section class="sec card"><h2>🚀 How to Play</h2><div class="steps">${['Choose a Category', 'Make Your Guess', 'See the Result', 'Earn Points'].map((s, i) => `<div class="step"><i>${i + 1}</i>${s}</div>`).join('')}</div></section>
     </div><aside>
       <section class="card"><h2>📈 Game Stats</h2><div class="stat-row"><div><b>${m.totalQuestions}</b><span>Verified Questions</span></div><div><b>${m.players.toLocaleString('en-US')}</b><span>Registered Players</span></div><div><b>${m.answers.toLocaleString('en-US')}</b><span>Guesses Made</span></div></div><p class="note" style="margin-top:10px">Live numbers from the database – no made-up counts.</p></section>
-      <section class="card sec"><div class="sec-head"><h2>👑 Top Players</h2><a href="/leaderboard" data-link>Full Leaderboard →</a></div>${top.rows.length ? top.rows.slice(0, 5).map((r) => row(r)).join('') : '<p class="muted">No ranked players yet – be the first on the board!</p><p style="margin-top:10px"><a class="btn sm" href="/signup" data-link>Create account</a></p>'}</section>
+      <section class="card sec"><div class="sec-head"><h2>👑 Top Players</h2><a href="/leaderboard" data-link>Full Leaderboard →</a></div><div id="homeTop"><p class="muted">Loading rankings…</p></div></section>
     </aside></div>
-    ${pairs.length ? `<section class="sec"><div class="sec-head"><h2>📏 Interesting size comparisons</h2><a href="/size-comparison" data-link>Compare anything →</a></div><div class="compare-strip">${pairs.map(([a, b]) => { const big = a.meters >= b.meters ? [a, b] : [b, a]; return `<div class="card"><div style="font-size:2rem">${big[0].icon} ${big[1].icon}</div><p><b>${esc(big[0].shortName)}</b> (${esc(fmtLen(big[0].meters))}) is about <b class="gold">${fmt(big[0].meters / big[1].meters)}×</b> the ${esc(big[0].kind.toLowerCase())} of <b>${esc(big[1].shortName)}</b> (${esc(fmtLen(big[1].meters))}).</p></div>`; }).join('')}</div></section>` : ''}
+    <div id="homeComparisons"></div>
     <section class="sec faq"><div class="sec-head"><h2>❓ FAQ</h2><a href="/faq" data-link>All questions →</a></div>${(m.faq || []).slice(0, 4).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>`);
+    // Non-essential homepage data loads after the main page is already visible.
+    const [top, fx] = await Promise.all([
+      api('/leaderboard/global').catch(() => ({ rows: [] })),
+      facts().catch(() => [])
+    ]);
+    if (!app.isConnected || location.pathname !== '/') return;
+    const topEl = app.querySelector('#homeTop');
+    if (topEl) topEl.innerHTML = top.rows.length
+      ? top.rows.slice(0, 5).map((r) => row(r)).join('')
+      : '<p class="muted">No ranked players yet – be the first on the board!</p><p style="margin-top:10px"><a class="btn sm" href="/signup" data-link>Create account</a></p>';
+    const by = (id) => fx.find((f) => f.id === id);
+    const pairs = [['animals-001', 'dinosaurs-001'], ['geography-001', 'geography-003'], ['space-003', 'space-001']].map(([a, b]) => [by(a), by(b)]).filter((p) => p[0] && p[1]);
+    const comparisons = app.querySelector('#homeComparisons');
+    if (comparisons && pairs.length) comparisons.innerHTML = `<section class="sec"><div class="sec-head"><h2>📏 Interesting size comparisons</h2><a href="/size-comparison" data-link>Compare anything →</a></div><div class="compare-strip">${pairs.map(([a, b]) => { const big = a.meters >= b.meters ? [a, b] : [b, a]; return `<div class="card"><div style="font-size:2rem">${big[0].icon} ${big[1].icon}</div><p><b>${esc(big[0].shortName)}</b> (${esc(fmtLen(big[0].meters))}) is about <b class="gold">${fmt(big[0].meters / big[1].meters)}×</b> the ${esc(big[0].kind.toLowerCase())} of <b>${esc(big[1].shortName)}</b> (${esc(fmtLen(big[1].meters))}).</p></div>`; }).join('')}</div></section>`;
   });
 
   /* ---------------- PLAY / MODES / CATEGORY SELECTION ---------------- */
