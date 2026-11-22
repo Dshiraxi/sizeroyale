@@ -116,23 +116,70 @@
     installPromptReady = false;
     const b = $('#installBtn'); if (b) b.textContent = 'Added to Home Screen ✓';
   });
-  async function installApp() {
+  function showInstallGuide() {
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       toast('SizeRoyale is already installed.');
       return;
     }
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      const choice = await deferredInstallPrompt.userChoice;
+    const ua = navigator.userAgent;
+    const isIOS = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
+    const isAndroid = /android/i.test(ua);
+    const isMac = /macintosh|mac os x/i.test(ua);
+    let title = 'Add SizeRoyale to your device';
+    let intro = 'Install SizeRoyale so you can open the game quickly, just like an app.';
+    let steps = [];
+    if (isIOS) {
+      steps = ['Open this page in Safari.', 'Tap the Share button at the bottom of the screen.', 'Choose “Add to Home Screen”, then tap Add.'];
+    } else if (isAndroid) {
+      steps = ['Tap your browser menu (⋮) in the top corner.', 'Choose “Install app” or “Add to Home screen”.', 'Confirm the install. SizeRoyale will appear on your home screen.'];
+    } else if (isMac) {
+      steps = ['In Safari, open the File menu and choose “Add to Dock”.', 'Or in Chrome/Edge, open the browser menu (⋮).', 'Choose “Install SizeRoyale” or “Create shortcut”, then confirm.'];
+    } else {
+      steps = ['Open your browser menu (⋮) in the top corner.', 'Choose “Install SizeRoyale”, “Install this site as an app”, or “Create shortcut”.', 'Confirm, then pin SizeRoyale somewhere handy.'];
+    }
+    const old = $('#installGuide');
+    if (old) old.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'installGuide';
+    overlay.className = 'install-guide';
+    overlay.innerHTML = `<div class="install-guide-bg" data-guide-close></div>
+      <section class="install-guide-card" role="dialog" aria-modal="true" aria-labelledby="installGuideTitle">
+        <button class="install-guide-close" type="button" aria-label="Close guide" data-guide-close>×</button>
+        <div class="install-guide-mark" aria-hidden="true">♛</div>
+        <p class="install-guide-kicker">SIZE ROYALE · QUICK INSTALL</p>
+        <h2 id="installGuideTitle">${title}</h2>
+        <p class="install-guide-intro">${intro}</p>
+        <ol>${steps.map((step) => `<li><span>${step}</span></li>`).join('')}</ol>
+        <p class="install-guide-tip">The exact wording can vary slightly by browser.</p>
+        <div class="install-guide-actions">
+          ${deferredInstallPrompt ? '<button class="btn block" type="button" id="installNowBtn">Install now</button>' : ''}
+          <button class="btn ghost block" type="button" data-guide-close>Got it</button>
+        </div>
+      </section>`;
+    document.body.appendChild(overlay);
+    const close = () => overlay.remove();
+    overlay.querySelectorAll('[data-guide-close]').forEach((el) => el.addEventListener('click', close));
+    const now = overlay.querySelector('#installNowBtn');
+    if (now) now.onclick = async () => {
+      const promptEvent = deferredInstallPrompt;
+      if (!promptEvent) return;
+      now.disabled = true;
+      promptEvent.prompt();
+      const choice = await promptEvent.userChoice;
       deferredInstallPrompt = null;
       installPromptReady = false;
+      close();
       if (choice && choice.outcome === 'accepted') toast('SizeRoyale is being added to your device.');
       else toast('You can install SizeRoyale whenever you are ready.');
-      return;
-    }
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-    toast(isIOS ? 'Tap Share in Safari, then choose Add to Home Screen.' : 'Open your browser menu and choose Install app or Add to Home Screen.');
+    };
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') { close(); document.removeEventListener('keydown', closeOnEscape); }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    const gotIt = overlay.querySelector('[data-guide-close]');
+    if (gotIt) gotIt.focus();
   }
+  async function installApp() { closeDrawer(); showInstallGuide(); }
   function openDrawer() { $('#drawer').classList.add('open'); $('#drawerBg').classList.add('open'); }
   function closeDrawer() { $('#drawer').classList.remove('open'); $('#drawerBg').classList.remove('open'); }
   async function logout() { await api('/auth/logout', {}).catch(() => {}); S.user = null; closeDrawer(); toast('Logged out'); go('/'); }
