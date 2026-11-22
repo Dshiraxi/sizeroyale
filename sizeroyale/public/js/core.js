@@ -76,7 +76,7 @@
   window.addEventListener('popstate', render);
 
   /* ---------- chrome: nav, tab bar, drawer, footer ---------- */
-  const NAV = [['/', 'Home', '🏠'], ['/play', 'Play', '🎮'], ['/daily-challenge', 'Daily Challenge', '🏆'], ['/multiplayer', 'Multiplayer', '👥'], ['/leaderboard', 'Leaderboard', '📊'], ['/explore', 'Explore', '🧭']];
+  const NAV = [['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Multiplayer'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore']];
   const TABS = [['/', 'Home'], ['/play', 'Play'], ['/leaderboard', 'Leaderboard'], ['/profile', 'Profile']];
   const isActive = (href, p) => (href === '/' ? p === '/' : p === href || p.startsWith(href + '/'));
   function renderChrome(p) {
