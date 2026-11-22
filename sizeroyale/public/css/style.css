@@ -22,13 +22,20 @@ main{max-width:1240px;margin:0 auto;padding:16px 16px 96px}
 .signup-top{background:rgba(25,26,56,.9);border:1px solid var(--line);box-shadow:none}
 .install-app{margin-top:12px}
 @media (max-width:999px){
-  .topbar{justify-content:center;padding-left:62px;padding-right:16px}
-  .topbar>.logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap}
-  .top-actions{margin-left:0;width:100%;justify-content:flex-end;gap:7px}
+  .topbar{justify-content:flex-end;padding:10px 12px;min-height:60px}
+  .topbar>.logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;max-width:calc(100% - 150px);gap:6px;font-size:1.08rem}
+  .topbar>.logo svg{width:29px;height:29px;flex:0 0 auto}
+  .top-actions{margin-left:auto;width:auto;justify-content:flex-end;gap:7px}
   .top-actions>#soundBtn,.top-actions>#unitBtn{display:none}
-  .top-actions>#authSlot{margin-left:auto}
-  .top-actions>.burger{position:absolute;left:16px;top:10px}
-  .signup-top{display:none}
+  .top-actions>#authSlot{margin-left:0}
+  .top-actions>#authSlot .btn{padding:8px 10px;font-size:.78rem;white-space:nowrap}
+  .top-actions>.burger{position:absolute;left:12px;top:10px}
+  .signup-top{display:none!important}
+}
+@media (max-width:380px){
+  .topbar>.logo{font-size:.96rem;gap:4px;max-width:calc(100% - 138px)}
+  .topbar>.logo svg{width:25px;height:25px}
+  .top-actions>#authSlot .btn{padding:7px 8px;font-size:.72rem}
 }
 @media (min-width:1000px){.install-app{display:none}}
 .logo b{color:var(--purple);background:linear-gradient(90deg,#a56bff,#E84AB7);-webkit-background-clip:text;background-clip:text;color:transparent}
