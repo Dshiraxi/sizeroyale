@@ -80,6 +80,7 @@
   const TABS = [
     ['/', 'Home', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>'],
     ['/play', 'Play', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 3.8 5l-1.1 3.7a2 2 0 0 1-3.3 1L14 15H10l-3.4 2.7a2 2 0 0 1-3.3-1L2.2 13A4 4 0 0 1 6 8Z"/><path d="M7 11v4M5 13h4M16 12h.01M19 14h.01"/></svg>'],
+    ['/size-comparison', 'Compare', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-4 8h8L7 7ZM17 7l-4 8h8l-4-8ZM8 21h8"/></svg>'],
     ['/leaderboard', 'Leaderboard', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4v2a4 4 0 0 0 4 4M16 6h4v2a4 4 0 0 1-4 4M12 13v5M8 21h8M9 18h6"/></svg>'],
     ['/profile', 'Profile', '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>']
   ];
