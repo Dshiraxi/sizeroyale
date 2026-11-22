@@ -76,7 +76,7 @@
   window.addEventListener('popstate', render);
 
   /* ---------- chrome: nav, tab bar, drawer, footer ---------- */
-  const NAV = [['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Multiplayer'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore']];
+  const NAV = [['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Multiplayer'], ['/size-comparison', 'Compare'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore']];
   const TABS = [
     ['/', 'Home', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>'],
     ['/play', 'Play', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 3.8 5l-1.1 3.7a2 2 0 0 1-3.3 1L14 15H10l-3.4 2.7a2 2 0 0 1-3.3-1L2.2 13A4 4 0 0 1 6 8Z"/><path d="M7 11v4M5 13h4M16 12h.01M19 14h.01"/></svg>'],
@@ -93,7 +93,7 @@
     $('#soundBtn').textContent = S.sound ? '🔊' : '🔇';
     $('#drawer').innerHTML = `<button class="icon-btn close" id="drawerClose" aria-label="Close menu">✕</button>
       <div class="who"><div class="av">${S.user ? esc(S.user.avatar) : '👑'}</div><div><b>${S.user ? esc(S.user.username) : 'Guest player'}</b><div class="note">${S.user ? 'Signed in' : 'Sign in to save progress'}</div></div></div>
-      ${[['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/multiplayer', 'Friends Battle'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore'], ['/learn', 'Learn'], ['/profile', 'Profile'], ['/faq', 'Help & FAQ']].map(([h, l]) => `<a href="${h}" data-link>${l}</a>`).join('')}
+      ${[['/', 'Home'], ['/play', 'Play'], ['/daily-challenge', 'Daily Challenge'], ['/size-comparison', 'Size Comparison'], ['/multiplayer', 'Friends Battle'], ['/leaderboard', 'Leaderboard'], ['/explore', 'Explore'], ['/learn', 'Learn'], ['/profile', 'Profile'], ['/faq', 'Help & FAQ']].map(([h, l]) => `<a href="${h}" data-link>${l}</a>`).join('')}
       ${S.user ? '<button class="btn ghost block item-logout" id="logoutBtn" style="margin-top:12px">Log out</button>' : '<a class="btn block" href="/login" data-link style="margin-top:12px">Sign In</a><a class="btn ghost block" href="/signup" data-link>Sign Up</a>'}
       <button class="btn blue block install-app" id="installBtn" type="button">＋ Add to Mobile</button>`;
     $('#drawerClose').onclick = closeDrawer;
