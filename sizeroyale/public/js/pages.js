@@ -6,15 +6,15 @@
   const row = (r, meKey) => `<div class="lb-row ${r.userId === meKey ? 'me' : ''}"><span class="rk">${r.rank <= 3 ? ['🥇', '🥈', '🥉'][r.rank - 1] : r.rank}</span><span class="av" style="width:32px;height:32px">${esc(r.avatar)}</span><span class="nm">${esc(r.username)}</span><span class="pt">${r.points.toLocaleString('en-US')}${r.games != null ? ` <span class="note">· ${r.games}g</span>` : ''}</span></div>`;
   const facts = (() => { let p; return () => (p = p || api('/facts').then((j) => j.facts)); })();
   const faqItems = [
-    ['What is Magnitudle?', 'Magnitudle is a daily size-guessing puzzle concept. SizeRoyale is an independent game with daily challenges, unlimited rounds and size comparisons.'],
-    ['What is Size It Up?', 'Size It Up is a real-world size guessing challenge: estimate the size of an object, then reveal its actual measurement and see how close you were.'],
-    ['Who created Size It Up?', 'SizeRoyale is an independently developed size-guessing game. It is not affiliated with Magnitudle or another puzzle brand.'],
-    ['Where can I play Size It Up?', 'Play directly in your browser at https://sizeroyale.fun/. No download is required.'],
-    ['Is there an official Magnitudle or Size It Up app?', 'There is no separate official mobile app for SizeRoyale. You can play on the website using your phone, tablet or computer.'],
-    ['Is Size It Up free?', 'Yes. SizeRoyale is free to play. You can try the game modes without paying.'],
-    ['How does Size It Up scoring work?', 'Each question is worth up to 1,000 points. The closer your estimate is to the real measurement, the more points you earn.'],
-    ['Can I play previous Size It Up puzzles?', 'You can keep playing with Unlimited Play and explore more questions. The Daily Challenge is a fresh shared challenge each day.'],
-    ['When are new Magnitudle games released?', 'SizeRoyale’s Daily Challenge refreshes every day at 00:00 UTC. Unlimited Play is available anytime.']
+    ['What is SizeRoyale?', 'SizeRoyale is a free real-world size guessing game. Estimate the size of animals, dinosaurs, planets, landmarks, vehicles and everyday objects, then reveal the real measurements.'],
+    ['What is Size Comparison?', 'Size Comparison is a head-to-head challenge. Choose which of two real-world things is longer, taller, wider or larger, then see the measurements and sources.'],
+    ['Who created SizeRoyale?', 'SizeRoyale is an independently developed online size-guessing game.'],
+    ['Where can I play SizeRoyale?', 'Play directly in your browser at https://sizeroyale.fun/. No download is required.'],
+    ['Is there an official SizeRoyale app?', 'There is no separate mobile app at the moment. You can play SizeRoyale on your phone, tablet or computer through the website.'],
+    ['Is SizeRoyale free?', 'Yes. SizeRoyale is free to play. You can enjoy the game modes without paying.'],
+    ['How does SizeRoyale scoring work?', 'In the guessing game, each question is worth up to 1,000 points. The closer your estimate is to the real measurement, the more points you earn.'],
+    ['Can I play previous SizeRoyale daily challenges?', 'The Daily Challenge is a fresh shared challenge each day. You can play more questions anytime in Unlimited Play and explore the other game modes.'],
+    ['When are new SizeRoyale daily challenges released?', 'A new Daily Challenge is available every day at 00:00 UTC. Unlimited Play and Size Comparison are available anytime.']
   ];
   const faqMarkup = (items) => items.map(([q, a], i) => `<div class="faq-item"><button class="faq-toggle" type="button" aria-expanded="false" aria-controls="faq-answer-${i}"><span>${esc(q)}</span><span class="faq-plus" aria-hidden="true">+</span></button><div class="faq-answer" id="faq-answer-${i}" hidden><p>${esc(a)}</p></div></div>`).join('');
   const bindFaq = (root) => root.querySelectorAll('.faq-toggle').forEach((btn) => btn.addEventListener('click', () => {
@@ -208,12 +208,20 @@
     function start() {
       index = 0; points = 0; selected = null;
       const eligible = shufflePairs(candidates.filter((item) => levels[difficulty].test(item.ratio)));
-      const selectedPairs = eligible.slice(0, 5);
-      if (selectedPairs.length < 5) {
-        const used = new Set(selectedPairs.map((item) => item.pair.map((f) => f.id).sort().join('|')));
-        const fill = shufflePairs(candidates.filter((item) => !used.has(item.pair.map((f) => f.id).sort().join('|')))).slice(0, 5 - selectedPairs.length);
-        selectedPairs.push(...fill);
-      }
+      const selectedPairs = [];
+      const usedThings = new Set();
+      const addUniquePairs = (pool) => {
+        for (const item of pool) {
+          if (selectedPairs.length >= 5) break;
+          const [a, b] = item.pair;
+          if (usedThings.has(a.id) || usedThings.has(b.id)) continue;
+          selectedPairs.push(item);
+          usedThings.add(a.id); usedThings.add(b.id);
+        }
+      };
+      addUniquePairs(eligible);
+      if (selectedPairs.length < 5) addUniquePairs(shufflePairs(candidates.filter((item) => levels[difficulty].test(item.ratio) === false)));
+      if (selectedPairs.length < 5) addUniquePairs(shufflePairs(candidates));
       rounds = selectedPairs.map((item) => item.pair);
       draw();
     }
