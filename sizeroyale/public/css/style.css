@@ -352,3 +352,21 @@ th{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.
 .faq-intro{color:#a0a1af;margin-bottom:25px}
 @media(max-width:760px){.how-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.faq-grid{column-gap:22px}}
 @media(max-width:520px){.how-grid{grid-template-columns:1fr 1fr;gap:9px}.how-card{padding:15px;min-height:180px}.how-card p{font-size:.82rem}.faq-grid{grid-template-columns:1fr}.faq-heading{align-items:start;flex-direction:column;gap:10px}.faq-home,.faq-page{margin-top:34px}}
+
+
+/* Match the SizeRoyale purple / blue theme and make FAQ rows real controls */
+.section-kicker{color:var(--blue)}
+.how-card{border-color:rgba(135,60,250,.25);background:linear-gradient(145deg,rgba(25,26,56,.96),rgba(16,17,40,.98))}
+.how-card:hover{border-color:rgba(53,185,255,.5);background:linear-gradient(145deg,rgba(32,34,74,.98),rgba(16,17,40,.98))}
+.how-icon{color:var(--blue)}
+.faq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:34px;align-items:start}
+.faq-item{border-top:1px solid rgba(135,60,250,.25);min-width:0}
+.faq-item:last-child{border-bottom:1px solid rgba(135,60,250,.25)}
+.faq-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0;text-align:left;color:var(--white);font-size:.94rem;font-weight:750;line-height:1.5}
+.faq-toggle:hover{color:var(--blue)}
+.faq-plus{flex:0 0 26px;width:26px;height:26px;border:1px solid rgba(53,185,255,.4);border-radius:50%;display:grid;place-items:center;color:var(--blue);font-size:1.05rem;font-weight:400;line-height:1;transition:background .2s,border-color .2s}
+.faq-toggle[aria-expanded="true"] .faq-plus{background:rgba(135,60,250,.18);border-color:var(--purple);color:var(--white)}
+.faq-answer{padding:0 42px 17px 0;color:var(--muted);font-size:.88rem;line-height:1.75}
+.faq-answer[hidden]{display:none}
+@media(max-width:760px){.faq-grid{column-gap:22px}}
+@media(max-width:520px){.faq-grid{grid-template-columns:1fr}}
