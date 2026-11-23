@@ -56,11 +56,12 @@ const buckets = new Map();
 function rateLimit(req, key, max, windowMs) {
   const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').toString().split(',')[0].trim();
   const k = key + '|' + ip; const now = Date.now();
+  if (buckets.size > 500) for (const [oldKey, oldBucket] of buckets) if (oldBucket.reset < now) buckets.delete(oldKey);
   let b = buckets.get(k);
   if (!b || b.reset < now) { b = { n: 0, reset: now + windowMs }; buckets.set(k, b); }
   if (++b.n > max) throw new HttpError(429, 'Too many requests – slow down.');
 }
-setInterval(() => { const now = Date.now(); for (const [k, b] of buckets) if (b.reset < now) buckets.delete(k); }, 60000).unref();
+// Expired rate-limit buckets are pruned opportunistically inside rateLimit().
 
 function hashPw(pw, salt) { return crypto.scryptSync(pw, salt, 64).toString('hex'); }
 function currentUser(req) { const t = cookies(req).sr_session; if (!t) return null; const s = db.sessions[t]; if (!s || s.exp < Date.now()) return null; return db.users[s.uid] || null; }
@@ -311,16 +312,15 @@ function leave(room, p) {
   broadcast(room);
 }
 function closeRoom(room) { clearTimer(room); for (const p of room.players) for (const c of p.conns) { try { c.end(); } catch (_) {} } rooms.delete(room.code); expired.set(room.code, Date.now()); }
-setInterval(() => {
+function cleanupRuntimeState() {
   const now = Date.now();
   for (const r of rooms.values()) {
-    const anyConn = r.players.some((p) => p.connected);
-    if (anyConn) r.lastActive = now;
+    if (r.players.some((p) => p.connected)) r.lastActive = now;
     if (now - r.lastActive > 10 * 60000 || now - r.created > 3 * 3600000) closeRoom(r);
   }
-  for (const [c, t] of expired) if (now - t > 3600000) expired.delete(c);
-  for (const [t, s] of Object.entries(db.sessions)) if (s.exp < now) delete db.sessions[t];
-}, 30000).unref();
+  for (const [code, time] of expired) if (now - time > 3600000) expired.delete(code);
+  for (const [token, session] of Object.entries(db.sessions)) if (session.exp < now) delete db.sessions[token];
+}
 
 function identity(body, user) {
   if (user) return { name: user.username, avatar: user.avatar, user };
@@ -402,6 +402,7 @@ function sse(req, res, params, query) {
 }
 
 async function handleApi(req, res, url) {
+  cleanupRuntimeState();
   const user = currentUser(req);
   try {
     if (req.method === 'GET' && /^\/api\/rooms\/[^/]+\/events$/.test(url.pathname)) return sse(req, res, { code: url.pathname.split('/')[3] }, url.searchParams);
