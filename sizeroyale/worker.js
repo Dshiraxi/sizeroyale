@@ -6,7 +6,7 @@ import { httpServerHandler } from 'cloudflare:node';
 import app from './server.js';
 
 const api = httpServerHandler(app.server);
-const SITE = 'https://sizeroyalefun.fazedanish5.workers.dev';
+const SITE = 'https://sizeroyale.fazedanish5.workers.dev';
 const HEAD = `<title>SizeRoyale – Guess the Size Game Online</title>
 <meta name="description" content="Guess the real size of animals, dinosaurs, planets, countries and everyday objects. Play daily challenges, compete with friends and climb the SizeRoyale leaderboard.">
 <link rel="canonical" href="${SITE}/">
