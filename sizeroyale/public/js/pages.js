@@ -28,13 +28,18 @@
     <div class="home-grid"><div>
       <section class="sec" style="margin-top:0"><div class="sec-head"><h2>⭐ Popular Categories</h2><a href="/play" data-link>View All Categories →</a></div>
         <div class="cats">${cats.map((c) => `<a class="cat" href="${c.path}" data-link style="background:${c.grad}"><span class="emo" aria-hidden="true">${c.icon}</span><b>${esc(c.short)}</b><small>${c.questions} verified questions</small><span class="arrow">→</span></a>`).join('')}</div></section>
-      <section class="sec card"><h2>🚀 How to Play</h2><div class="steps">${['Choose a Category', 'Make Your Guess', 'See the Result', 'Earn Points'].map((s, i) => `<div class="step"><i>${i + 1}</i>${s}</div>`).join('')}</div></section>
+      <section class="sec how-section"><div class="section-kicker">FOUR SIMPLE STEPS</div><h2>How SizeRoyale works</h2><div class="how-grid">
+          <article class="how-card"><span class="how-icon" aria-hidden="true">◎</span><span class="how-number">01</span><h3>Choose</h3><p>Pick a game mode or explore a category you love.</p></article>
+          <article class="how-card"><span class="how-icon" aria-hidden="true">↔</span><span class="how-number">02</span><h3>Make your guess</h3><p>Estimate the real-world size using a number or slider.</p></article>
+          <article class="how-card"><span class="how-icon" aria-hidden="true">✧</span><span class="how-number">03</span><h3>Reveal</h3><p>See the actual measurement, your error and a fun fact.</p></article>
+          <article class="how-card"><span class="how-icon" aria-hidden="true">♜</span><span class="how-number">04</span><h3>Score</h3><p>Earn up to 1,000 points per question and climb the leaderboard.</p></article>
+        </div></section>
     </div><aside>
       <section class="card"><h2>📈 Game Stats</h2><div class="stat-row"><div><b>${m.totalQuestions}</b><span>Verified Questions</span></div><div><b>${m.players.toLocaleString('en-US')}</b><span>Registered Players</span></div><div><b>${m.answers.toLocaleString('en-US')}</b><span>Guesses Made</span></div></div><p class="note" style="margin-top:10px">Live numbers from the database – no made-up counts.</p></section>
       <section class="card sec"><div class="sec-head"><h2>👑 Top Players</h2><a href="/leaderboard" data-link>Full Leaderboard →</a></div><div id="homeTop"><p class="muted">Loading rankings…</p></div></section>
     </aside></div>
     <div id="homeComparisons"></div>
-    <section class="sec faq"><div class="sec-head"><h2>❓ FAQ</h2><a href="/faq" data-link>All questions →</a></div>${(m.faq || []).slice(0, 4).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>`);
+    <section class="sec faq-home"><div class="faq-heading"><div><div class="section-kicker">QUESTIONS, ANSWERED</div><h2>Frequently asked questions</h2></div><a href="/faq" data-link>View all FAQs →</a></div><div class="faq-grid">${(m.faq || []).slice(0, 4).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>`);
     // Non-essential homepage data loads after the main page is already visible.
     const [top, fx] = await Promise.all([
       api('/leaderboard/global').catch(() => ({ rows: [] })),
@@ -316,7 +321,7 @@
     <h2>Accounts</h2><p>Guests can play everything, but results are only saved (and ranked) with a free account.</p><p class="row"><a class="btn" href="/play" data-link>▶ Play now</a></p></div>`);
   });
   register('/faq', async () => {
-    setTitle('FAQ'); view(`${crumbs(['', 'FAQ'])}<div class="prose faq"><h1>Frequently asked questions</h1>${(S.meta.faq || []).map(([q, a]) => `<details open><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>`);
+    setTitle('FAQ'); view(`${crumbs(['', 'FAQ'])}<section class="faq-page"><div class="section-kicker">QUESTIONS, ANSWERED</div><h1>Frequently asked questions</h1><p class="faq-intro">Quick answers about playing, scoring and SizeRoyale.</p><div class="faq-grid">${(S.meta.faq || []).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>`);
   });
 
   /* ---------------- ABOUT / CONTACT / LEGAL ---------------- */
