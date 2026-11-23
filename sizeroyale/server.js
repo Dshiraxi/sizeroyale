@@ -11,8 +11,8 @@ const { ROUTES, FAQ } = require('./lib/seo');
 
 const PORT = Number(process.env.PORT || 3000);
 const SITE = (process.env.SITE_URL || 'https://sizeroyale.fun').replace(/\/$/, '');
-const DB_FILE = process.env.DB_FILE || path.join(__dirname, 'data', 'db.json');
-const PUBLIC = path.join(__dirname, 'public');
+const DB_FILE = process.env.DB_FILE || path.join('.', 'data', 'db.json');
+const PUBLIC = path.join('.', 'public');
 const ROUND_SEC = Number(process.env.ROUND_SEC || 20);
 const REVEAL_SEC = Number(process.env.REVEAL_SEC || 6);
 const ROUNDS = 5;
@@ -446,7 +446,7 @@ function sitemap() {
 function serveStatic(req, res, url) {
   if (url.pathname === '/sitemap.xml') return send(res, 200, sitemap(), { 'content-type': 'application/xml' });
   if (url.pathname === '/robots.txt') return send(res, 200, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /room/\nSitemap: ${SITE}/sitemap.xml\n`, { 'content-type': 'text/plain' });
-  if (url.pathname === '/lib/scoring.js') return send(res, 200, fs.readFileSync(path.join(__dirname, 'lib', 'scoring.js')), { 'content-type': MIME['.js'] });
+  if (url.pathname === '/lib/scoring.js') return send(res, 200, fs.readFileSync(path.join('.', 'lib', 'scoring.js')), { 'content-type': MIME['.js'] });
   const rel = decodeURIComponent(url.pathname);
   const file = path.normalize(path.join(PUBLIC, rel));
   if (file.startsWith(PUBLIC + path.sep) && fs.existsSync(file) && fs.statSync(file).isFile() && path.basename(file) !== 'index.html') {
