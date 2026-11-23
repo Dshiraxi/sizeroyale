@@ -5,6 +5,26 @@
   const crumbs = (...items) => `<nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-link>Home</a>${items.map(([h, l]) => ' › ' + (h ? `<a href="${h}" data-link>${l}</a>` : `<span>${l}</span>`)).join('')}</nav>`;
   const row = (r, meKey) => `<div class="lb-row ${r.userId === meKey ? 'me' : ''}"><span class="rk">${r.rank <= 3 ? ['🥇', '🥈', '🥉'][r.rank - 1] : r.rank}</span><span class="av" style="width:32px;height:32px">${esc(r.avatar)}</span><span class="nm">${esc(r.username)}</span><span class="pt">${r.points.toLocaleString('en-US')}${r.games != null ? ` <span class="note">· ${r.games}g</span>` : ''}</span></div>`;
   const facts = (() => { let p; return () => (p = p || api('/facts').then((j) => j.facts)); })();
+  const faqItems = [
+    ['What is Magnitudle?', 'Magnitudle is a daily size-guessing puzzle concept. SizeRoyale is an independent game with daily challenges, unlimited rounds and size comparisons.'],
+    ['What is Size It Up?', 'Size It Up is a real-world size guessing challenge: estimate the size of an object, then reveal its actual measurement and see how close you were.'],
+    ['Who created Size It Up?', 'SizeRoyale is an independently developed size-guessing game. It is not affiliated with Magnitudle or another puzzle brand.'],
+    ['Where can I play Size It Up?', 'Play directly in your browser at https://sizeroyale.fun/. No download is required.'],
+    ['Is there an official Magnitudle or Size It Up app?', 'There is no separate official mobile app for SizeRoyale. You can play on the website using your phone, tablet or computer.'],
+    ['Is Size It Up free?', 'Yes. SizeRoyale is free to play. You can try the game modes without paying.'],
+    ['How does Size It Up scoring work?', 'Each question is worth up to 1,000 points. The closer your estimate is to the real measurement, the more points you earn.'],
+    ['Can I play previous Size It Up puzzles?', 'You can keep playing with Unlimited Play and explore more questions. The Daily Challenge is a fresh shared challenge each day.'],
+    ['When are new Magnitudle games released?', 'SizeRoyale’s Daily Challenge refreshes every day at 00:00 UTC. Unlimited Play is available anytime.']
+  ];
+  const faqMarkup = (items) => items.map(([q, a], i) => `<div class="faq-item"><button class="faq-toggle" type="button" aria-expanded="false" aria-controls="faq-answer-${i}"><span>${esc(q)}</span><span class="faq-plus" aria-hidden="true">+</span></button><div class="faq-answer" id="faq-answer-${i}" hidden><p>${esc(a)}</p></div></div>`).join('');
+  const bindFaq = (root) => root.querySelectorAll('.faq-toggle').forEach((btn) => btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    const answer = root.querySelector('#' + btn.getAttribute('aria-controls'));
+    if (answer) answer.hidden = open;
+    const plus = btn.querySelector('.faq-plus');
+    if (plus) plus.textContent = open ? '+' : '−';
+  }));
 
   /* ---------------- HOME ---------------- */
   register('/', async () => {
@@ -39,7 +59,8 @@
       <section class="card sec"><div class="sec-head"><h2>👑 Top Players</h2><a href="/leaderboard" data-link>Full Leaderboard →</a></div><div id="homeTop"><p class="muted">Loading rankings…</p></div></section>
     </aside></div>
     <div id="homeComparisons"></div>
-    <section class="sec faq-home"><div class="faq-heading"><div><div class="section-kicker">QUESTIONS, ANSWERED</div><h2>Frequently asked questions</h2></div><a href="/faq" data-link>View all FAQs →</a></div><div class="faq-grid">${(m.faq || []).slice(0, 4).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>`);
+    <section class="sec faq-home"><div class="faq-heading"><div><div class="section-kicker">QUESTIONS, ANSWERED</div><h2>Frequently asked questions</h2></div><a href="/faq" data-link>View all FAQs →</a></div><div class="faq-grid">${faqMarkup(faqItems)}</div></section>`);
+    bindFaq(app);
     // Non-essential homepage data loads after the main page is already visible.
     const [top, fx] = await Promise.all([
       api('/leaderboard/global').catch(() => ({ rows: [] })),
@@ -321,7 +342,8 @@
     <h2>Accounts</h2><p>Guests can play everything, but results are only saved (and ranked) with a free account.</p><p class="row"><a class="btn" href="/play" data-link>▶ Play now</a></p></div>`);
   });
   register('/faq', async () => {
-    setTitle('FAQ'); view(`${crumbs(['', 'FAQ'])}<section class="faq-page"><div class="section-kicker">QUESTIONS, ANSWERED</div><h1>Frequently asked questions</h1><p class="faq-intro">Quick answers about playing, scoring and SizeRoyale.</p><div class="faq-grid">${(S.meta.faq || []).map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></section>`);
+    setTitle('FAQ'); const app = view(`${crumbs(['', 'FAQ'])}<section class="faq-page"><div class="section-kicker">QUESTIONS, ANSWERED</div><h1>Frequently asked questions</h1><p class="faq-intro">Quick answers about playing, scoring and SizeRoyale.</p><div class="faq-grid">${faqMarkup(faqItems)}</div></section>`);
+    bindFaq(app);
   });
 
   /* ---------------- ABOUT / CONTACT / LEGAL ---------------- */
