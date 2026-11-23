@@ -83,6 +83,43 @@ add('everyday-objects', '✏️', 'Length', 'How long is a new standard pencil?'
 add('everyday-objects', '⛳', 'Diameter', 'What is the diameter of a golf ball?', 'Minimum allowed diameter under golf rules (42.67 mm).', 0.04267, 'hard', 'Rules limit the minimum diameter, not the maximum.', 'Wikipedia – Golf ball', W('Golf_ball'));
 add('everyday-objects', '⚾', 'Length', 'How long can a baseball bat be?', 'Maximum bat length allowed in professional baseball (42 in).', 1.0668, 'hard', 'Professional bats must be one smooth, solid piece of wood.', 'Wikipedia – Baseball bat', W('Baseball_bat'));
 
+
+/* ---------- EXTRA VARIETY: additional distinct comparisons ---------- */
+// ANIMALS
+add('animals', '🦁', 'Length', 'How long is an adult male lion?', 'Approximate total body length of a large adult male lion, excluding the tail.', 2.5, 'medium', 'A lion’s tail adds further length beyond its head and body.', 'Wikipedia – Lion', W('Lion'));
+add('animals', '🐻‍❄️', 'Length', 'How long is a polar bear?', 'Approximate head-and-body length of a large adult polar bear.', 2.6, 'medium', 'Polar bears are the largest living bear species.', 'Wikipedia – Polar bear', W('Polar_bear'));
+add('animals', '🦍', 'Height', 'How tall is a silverback gorilla?', 'Approximate upright height of an adult male gorilla.', 1.7, 'medium', 'Adult male gorillas are called silverbacks because of the silver hair on their backs.', 'Wikipedia – Gorilla', W('Gorilla'));
+add('animals', '🦩', 'Height', 'How tall is a greater flamingo?', 'Approximate standing height of an adult greater flamingo.', 1.4, 'hard', 'The greater flamingo is the tallest and most widespread flamingo species.', 'Wikipedia – Greater flamingo', W('Greater_flamingo'));
+
+// DINOSAURS
+add('dinosaurs', '🦴', 'Length', 'How long was Allosaurus?', 'Approximate length of a large adult Allosaurus.', 9.7, 'medium', 'Allosaurus lived in the Late Jurassic period.', 'Wikipedia – Allosaurus', W('Allosaurus'));
+add('dinosaurs', '🛡️', 'Length', 'How long was Ankylosaurus?', 'Approximate length of an adult Ankylosaurus.', 6.0, 'medium', 'Ankylosaurus had heavy body armor and a powerful tail club.', 'Wikipedia – Ankylosaurus', W('Ankylosaurus'));
+add('dinosaurs', '🦕', 'Length', 'How long was Parasaurolophus?', 'Approximate body length of an adult Parasaurolophus.', 9.5, 'hard', 'Its distinctive hollow head crest may have helped produce sounds.', 'Wikipedia – Parasaurolophus', W('Parasaurolophus'));
+
+// SPACE & PLANETS
+add('space', '🔵', 'Diameter', 'What is the equatorial diameter of Neptune?', 'Equatorial diameter of Neptune.', 49528000, 'medium', 'Neptune is the most distant recognised planet from the Sun.', 'NASA – Neptune Fact Sheet', 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/neptunefact.html');
+add('space', '🟦', 'Diameter', 'What is the equatorial diameter of Uranus?', 'Equatorial diameter of Uranus.', 51118000, 'medium', 'Uranus rotates on its side compared with most planets.', 'NASA – Uranus Fact Sheet', 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/uranusfact.html');
+add('space', '🧊', 'Diameter', 'What is the diameter of Pluto?', 'Mean diameter of dwarf planet Pluto.', 2377000, 'hard', 'Pluto is classified as a dwarf planet.', 'NASA – Pluto', 'https://science.nasa.gov/dwarf-planets/pluto/');
+add('space', '🪐', 'Diameter', 'What is the equatorial diameter of Jupiter’s moon Ganymede?', 'Mean diameter of Ganymede, Jupiter’s largest moon.', 5268000, 'hard', 'Ganymede is larger than the planet Mercury in diameter.', 'NASA – Ganymede', 'https://science.nasa.gov/jupiter/moons/ganymede/');
+
+// GEOGRAPHY
+add('geography', '🏙️', 'Height', 'How tall is the Empire State Building?', 'Architectural height including its antenna.', 443.2, 'medium', 'The Empire State Building opened in 1931.', 'Wikipedia – Empire State Building', W('Empire_State_Building'));
+add('geography', '🏢', 'Height', 'How tall is Taipei 101?', 'Architectural height of Taipei 101.', 508, 'medium', 'Taipei 101 was the world’s tallest building from 2004 to 2010.', 'Wikipedia – Taipei 101', W('Taipei_101'));
+add('geography', '💧', 'Height', 'How tall is Angel Falls?', 'Approximate total height of Angel Falls in Venezuela.', 979, 'hard', 'Angel Falls is widely recognised as the world’s highest uninterrupted waterfall.', 'Wikipedia – Angel Falls', W('Angel_Falls'));
+add('geography', '🏔️', 'Height', 'How tall is K2?', 'Elevation of K2 above sea level.', 8611, 'hard', 'K2 is the second-highest mountain on Earth.', 'Wikipedia – K2', W('K2'));
+
+// VEHICLES
+add('vehicles', '🚗', 'Length', 'How long is a Tesla Model 3?', 'Approximate overall length of a recent Tesla Model 3.', 4.72, 'easy', 'The Model 3 is a mid-size electric sedan.', 'Wikipedia – Tesla Model 3', W('Tesla_Model_3'));
+add('vehicles', '🛻', 'Length', 'How long is a Ford F-150?', 'Approximate overall length of a full-size Ford F-150 pickup configuration.', 5.89, 'medium', 'The F-150 has been one of the best-selling pickup trucks in the United States.', 'Wikipedia – Ford F-Series', W('Ford_F-Series'));
+add('vehicles', '🚄', 'Length', 'How long is a Shinkansen train set?', 'Approximate length of a 16-car Tokaido Shinkansen train set.', 400, 'hard', 'A 16-car Shinkansen train can be about 400 metres long.', 'Wikipedia – Shinkansen', W('Shinkansen'));
+add('vehicles', '🚁', 'Length', 'How long is a Boeing CH-47 Chinook helicopter?', 'Overall length including rotors, approximately.', 30.1, 'hard', 'The Chinook uses tandem rotors instead of a tail rotor.', 'Wikipedia – Boeing CH-47 Chinook', W('Boeing_CH-47_Chinook'));
+
+// EVERYDAY OBJECTS
+add('everyday-objects', '📱', 'Length', 'How tall is a typical smartphone?', 'Approximate height of a modern large-screen smartphone.', 0.16, 'easy', 'Smartphone dimensions vary by model and screen size.', 'Wikipedia – Smartphone', W('Smartphone'));
+add('everyday-objects', '📏', 'Length', 'How long is a standard 30 cm ruler?', 'Length of a common classroom ruler.', 0.30, 'easy', 'A 30 cm ruler is also close to one foot long.', 'Wikipedia – Ruler', W('Ruler'));
+add('everyday-objects', '🚪', 'Height', 'How tall is a standard interior door?', 'Approximate height of a common interior door.', 2.03, 'medium', 'Door sizes vary by country and building standards.', 'Wikipedia – Door', W('Door'));
+add('everyday-objects', '🎸', 'Length', 'How long is a full-size acoustic guitar?', 'Approximate overall length of a full-size acoustic guitar.', 1.0, 'hard', 'Full-size acoustic guitar dimensions vary by body style.', 'Wikipedia – Acoustic guitar', W('Acoustic_guitar'));
+
 const CATEGORIES = [
   { slug: 'animals', name: 'Animals', short: 'Animals', target: 100, path: '/animals', icon: '🐯', grad: 'linear-gradient(145deg,#1c6b3a,#0b2d1b)', desc: 'From the blue whale to the bee hummingbird – how big is the animal kingdom, really?' },
   { slug: 'dinosaurs', name: 'Dinosaurs', short: 'Dinosaurs', target: 60, path: '/dinosaurs', icon: '🦖', grad: 'linear-gradient(145deg,#9a4a1d,#2f1708)', desc: 'Giants of the Mesozoic. Can you tell a Velociraptor from a Diplodocus by size?' },
