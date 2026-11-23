@@ -19,7 +19,7 @@ const NOSCRIPT = '<noscript><main><h1>Guess the Size Game</h1><p>Play SizeRoyale
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.pathname.startsWith('/api/')) return api(request, env, ctx);
+    if (url.pathname.startsWith('/api/')) return api.fetch(request, env, ctx);
     const response = await env.ASSETS.fetch(request);
     const type = response.headers.get('content-type') || '';
     if (!type.includes('text/html')) return response;
