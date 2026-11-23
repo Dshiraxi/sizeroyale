@@ -221,7 +221,7 @@
       };
       addUniquePairs(eligible);
       if (selectedPairs.length < 10) addUniquePairs(shufflePairs(candidates.filter((item) => levels[difficulty].test(item.ratio) === false)));
-      if (selectedPairs.length < 5) addUniquePairs(shufflePairs(candidates));
+      if (selectedPairs.length < 10) addUniquePairs(shufflePairs(candidates));
       rounds = selectedPairs.map((item) => item.pair);
       draw();
     }
