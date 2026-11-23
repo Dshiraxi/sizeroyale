@@ -106,8 +106,8 @@
       submit: (q, value, unit) => api('/guess', { qid: q.id, value, unit, mode: 'unlimited', gameId }),
       summary(answers) {
         const total = answers.reduce((s, a) => s + a.score, 0); A.sfx.win(); if (total >= 3500) A.confetti();
-        view(`<div class="game">${A.summaryCard({ title: 'Round complete!', answers, max: 5000, extra: S.user ? '<p class="note">Saved to your profile and the global leaderboard.</p>' : '<p class="note">Playing as guest – <a href="/signup" data-link style="text-decoration:underline">create a free account</a> to save results and join the leaderboard.</p>', actions: '<button class="btn" id="again">Play another 5</button><a class="btn ghost" href="' + back + '" data-link>Change category</a>' })}</div>`);
-        $('#again').onclick = () => begin();
+        view(`<div class="game">${A.summaryCard({ title: 'Round complete!', answers, max: 5000, extra: S.user ? '<p class="note">Saved to your profile and the global leaderboard.</p>' : '<p class="note">Playing as guest – <a href="/signup" data-link style="text-decoration:underline">create a free account</a> to save results and join the leaderboard.</p>', actions: (total >= 3500 ? '<button class="btn" id="shareUnlimited">↗ Share score</button>' : '') + '<button class="btn" id="again">Play another 5</button><a class="btn ghost" href="' + back + '" data-link>Change category</a>' })}</div>`);
+        const shareBtn = $('#shareUnlimited'); if (shareBtn) shareBtn.onclick = async () => { const msg = 'I scored ' + total.toLocaleString('en-US') + '/5,000 in SizeRoyale Unlimited Play! Can you beat me? ' + location.origin + '/unlimited'; try { if (navigator.share) await navigator.share({ title: 'SizeRoyale', text: msg }); else { await navigator.clipboard.writeText(msg); toast('Score copied — share it anywhere!'); } } catch (e) { if (e && e.name !== 'AbortError') toast('Could not share right now.'); } }; $('#again').onclick = () => begin();
       },
     };
     function begin() { gameId = 'u-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); A.runQuiz(Object.assign({}, cfg, { answers: [] })); }
