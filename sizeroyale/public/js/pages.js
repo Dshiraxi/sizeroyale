@@ -267,11 +267,18 @@
   register('/leaderboard', async (_, q) => {
     setTitle('Leaderboard'); let tab = q.get('tab') === 'daily' ? 'daily' : 'global';
     view(`${crumbs(['', 'Leaderboard'])}<h1>🏆 Leaderboard</h1><div class="tabs" style="margin-top:14px" role="tablist"><button role="tab" data-t="global">Global</button><button role="tab" data-t="daily">Daily</button></div><div class="card" id="lb"><div class="skeleton"></div></div>`);
+    let loadVersion = 0;
     async function load() {
+      const version = ++loadVersion;
       $$('.tabs button').forEach((b) => b.classList.toggle('sel', b.dataset.t === tab));
-      const r = await api('/leaderboard/' + tab); const meId = S.user && S.user.id;
+      const r = await api('/leaderboard/' + tab);
+      // Ignore stale responses after a tab switch or navigation to another mode.
+      if (version !== loadVersion || location.pathname !== '/leaderboard') return;
+      const lb = $('#lb');
+      if (!lb) return;
+      const meId = S.user && S.user.id;
       const rows = r.rows.map((x) => row(x, meId)).join(''); const meRow = r.me && r.me.rank > r.rows.length ? `<div class="note" style="margin:10px 0 4px">Your position</div>${row(r.me, meId)}` : '';
-      $('#lb').innerHTML = `${tab === 'daily' ? `<p class="note" style="margin-bottom:8px">${esc(r.date)} · daily score out of 5,000</p>` : '<p class="note" style="margin-bottom:8px">Total points across Daily and Unlimited play</p>'}${rows || `<p class="muted center" style="padding:24px 0">${tab === 'daily' ? 'No one has finished today\'s challenge yet.' : 'No ranked players yet.'}</p><p class="center"><a class="btn" href="${tab === 'daily' ? '/daily-challenge' : '/play'}" data-link>Be the first</a></p>`}${meRow}${!S.user ? '<p class="note center" style="margin-top:12px"><a href="/signup" data-link style="text-decoration:underline">Create an account</a> to appear here.</p>' : ''}`;
+      lb.innerHTML = `${tab === 'daily' ? `<p class="note" style="margin-bottom:8px">${esc(r.date)} · daily score out of 5,000</p>` : '<p class="note" style="margin-bottom:8px">Total points across Daily and Unlimited play</p>'}${rows || `<p class="muted center" style="padding:24px 0">${tab === 'daily' ? 'No one has finished today\\'s challenge yet.' : 'No ranked players yet.'}</p><p class="center"><a class="btn" href="${tab === 'daily' ? '/daily-challenge' : '/play'}" data-link>Be the first</a></p>`}${meRow}${!S.user ? '<p class="note center" style="margin-top:12px"><a href="/signup" data-link style="text-decoration:underline">Create an account</a> to appear here.</p>' : ''}`;
     }
     $$('.tabs button').forEach((b) => (b.onclick = () => { tab = b.dataset.t; history.replaceState({}, '', '/leaderboard' + (tab === 'daily' ? '?tab=daily' : '')); load(); }));
     await load();
