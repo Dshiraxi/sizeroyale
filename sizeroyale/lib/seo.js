@@ -9,7 +9,7 @@ const FAQ = [
   ['Where do the sizes come from?', 'Each question lists its source and the exact measurement definition (length, height, wingspan, diameter or depth).'],
 ];
 const R = {
-  '/': { title: 'SizeRoyale – Guess the Size Game | Guess. Compete. Dominate.', h1: 'Guess the Size. Challenge Your Knowledge.', description: 'Play SizeRoyale, a free guess-the-size game. Test real-world size comparisons, take the Daily Challenge, battle friends and climb the leaderboard.', faq: FAQ },
+  '/': { title: 'Free Size Comparison Game Online | SizeRoyale', h1: 'Guess the Size. Challenge Your Knowledge.', description: 'Play a free size comparison game online with SizeRoyale. Guess the size of animals, dinosaurs, planets and more, compare real-world measurements and test your knowledge.', faq: FAQ },
   '/play': { title: 'Play SizeRoyale – Choose a Game Mode', h1: 'Choose a game mode', description: 'Choose Daily Challenge, Unlimited Play, the five-round Size Comparison game or Friends Battle, then test your size knowledge.' },
   '/guess-the-size': { title: 'Guess the Size Game – How It Works | SizeRoyale', h1: 'Guess the Size game', description: 'A guess-the-size game with verified measurements: guess the real size of animals, planets, landmarks and objects and score up to 1,000 points per question.' },
   '/size-comparison': { title: 'Size Comparison Game – Which Is Bigger? | SizeRoyale', h1: 'Size comparison game', description: 'Play the free SizeRoyale size comparison game. Choose which of two real-world things is bigger across five rounds, earn points and explore sourced measurements.' },
