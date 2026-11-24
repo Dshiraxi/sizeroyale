@@ -36,7 +36,17 @@ export default {
 <meta property="og:title" content="${title}"><meta property="og:description" content="${description}">
 <meta property="og:url" content="${canonical}">
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="${title}"><meta name="twitter:description" content="${description}">`;
-    html = html.replace('<!--SEO_HEAD-->', HEAD).replace('<!--SEO_NOSCRIPT-->', NOSCRIPT);
+    // Remove any metadata already present in the HTML before adding the route-specific SEO.
+    html = html
+      .replace(/<title>[\\s\\S]*?<\\/title>/i, '')
+      .replace(/<meta\\s+name=["']description["'][^>]*>/ig, '')
+      .replace(/<meta\\s+property=["']og:description["'][^>]*>/ig, '')
+      .replace(/<meta\\s+name=["']twitter:description["'][^>]*>/ig, '')
+      .replace(/<link\\s+rel=["']canonical["'][^>]*>/ig, '')
+      .replace('<!--SEO_HEAD-->', '')
+      .replace('<!--SEO_NOSCRIPT-->', '');
+    html = html.includes('</head>') ? html.replace('</head>', HEAD + '\\n</head>') : html;
+    html = html.replace('</body>', NOSCRIPT + '\\n</body>');
     const headers = new Headers(response.headers);
     headers.set('content-type', 'text/html; charset=utf-8');
     headers.set('cache-control', 'no-cache');
