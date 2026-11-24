@@ -6,13 +6,13 @@ import { httpServerHandler } from 'cloudflare:node';
 import app from './server.js';
 
 const api = httpServerHandler(app.server);
-const SITE = 'https://sizeroyale.fazedanish5.workers.dev';
-const HEAD = `<title>SizeRoyale – Guess the Size Game Online</title>
-<meta name="description" content="Guess the real size of animals, dinosaurs, planets, countries and everyday objects. Play daily challenges, compete with friends and climb the SizeRoyale leaderboard.">
+const SITE = 'https://sizeroyale.fun';
+const HEAD = `<title>Free Size Comparison Game Online | SizeRoyale</title>
+<meta name="description" content="Play a free size comparison game online with SizeRoyale. Guess the size of animals, dinosaurs, planets and more, compare real-world measurements and test your knowledge.">
 <link rel="canonical" href="${SITE}/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="SizeRoyale">
-<meta property="og:title" content="SizeRoyale – Guess. Compete. Dominate.">
-<meta property="og:description" content="Test your knowledge with real-world size comparisons. Play free online.">
+<meta property="og:title" content="Free Size Comparison Game Online | SizeRoyale">
+<meta property="og:description" content="Play a free size comparison game online with SizeRoyale. Guess the size of animals, dinosaurs, planets and more, compare real-world measurements and test your knowledge.">
 <meta name="twitter:card" content="summary">`;
 const NOSCRIPT = '<noscript><main><h1>Guess the Size Game</h1><p>Play SizeRoyale to guess real-world sizes, take daily challenges and compete with friends. JavaScript is required to play.</p></main></noscript>';
 
