@@ -8,10 +8,10 @@ import app from './server.js';
 const api = httpServerHandler(app.server);
 const SITE = 'https://sizeroyale.fun';
 const ROUTE_SEO = {
-  '/': { title: 'Free Size Comparison Game Online | SizeRoyale', description: 'Play SizeRoyale, a free size comparison game. Guess the size of animals, dinosaurs, planets and more. Test your knowledge and beat your score.', h1: 'How Big Is It Really? Play the Size Comparison Game' },
-  '/animals': { title: 'Animal Size Comparison Game | SizeRoyale', description: 'Compare the sizes of amazing animals, from tiny creatures to giant whales. Play and discover how big animals really are.', h1: 'Animal Size Comparison Game' },
-  '/dinosaurs': { title: 'Dinosaur Size Comparison Game | SizeRoyale', description: 'Compare dinosaur sizes and discover how massive prehistoric creatures really were. Test your knowledge with SizeRoyale.', h1: 'Dinosaur Size Comparison Game' },
-  '/space': { title: 'Planet Size Comparison | SizeRoyale', description: 'Compare the sizes of planets in our solar system. Discover how Earth, Mars, Jupiter and other worlds measure up.', h1: 'Planet Size Comparison Game' }
+  '/': { title: 'Free Size Comparison Game Online | SizeRoyale', description: 'Play a free size comparison game online with SizeRoyale. Guess the size of animals, dinosaurs, planets and more, compare real-world measurements and test your knowledge.', h1: 'How Big Is It Really? Play the Size Comparison Game' },
+  '/animals': { title: 'Animal Size Comparison Game | SizeRoyale', description: 'Play an animal size comparison game online. Compare animal sizes from tiny creatures to giant whales and discover how big animals really are.', h1: 'Animal Size Comparison Game' },
+  '/dinosaurs': { title: 'Dinosaur Size Comparison Game | SizeRoyale', description: 'Play a dinosaur size comparison game. Compare T. rex, sauropods and other prehistoric giants using real fossil-based size estimates.', h1: 'Dinosaur Size Comparison Game' },
+  '/space': { title: 'Planet Size Comparison | SizeRoyale', description: 'Explore planet size comparison with Earth, Mars, Jupiter and every major world in our solar system. Guess planetary diameters and see how they compare.', h1: 'Planet Size Comparison Game' }
 };
 const DEFAULT_SEO = { title: 'SizeRoyale – Guess the Size Game', description: 'Play free size-guessing and size comparison games with animals, dinosaurs, planets and more.' };
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
