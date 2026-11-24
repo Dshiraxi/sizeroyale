@@ -28,7 +28,7 @@
 
   /* ---------------- HOME ---------------- */
   register('/', async () => {
-    setTitle('');
+    setTitle('Free Size Comparison Game Online');
     const m = S.meta; const cats = m.categories;
     const app = view(`
     <section class="hero" aria-labelledby="h1">
@@ -134,7 +134,7 @@
   };
   ['animals', 'dinosaurs', 'space', 'geography', 'vehicles', 'everyday-objects'].forEach((slug) => {
     register('/' + slug, async (_, q) => {
-      const c = catBy(slug); let diff = q.get('diff') || 'all'; setTitle(c.name);
+      const c = catBy(slug); let diff = q.get('diff') || 'all'; setTitle(slug === 'animals' ? 'Animal Size Comparison Game' : slug === 'dinosaurs' ? 'Dinosaur Size Comparison Game' : slug === 'space' ? 'Planet Size Comparison' : c.name);
       view(`${crumbs(['/play', 'Play'], ['', esc(c.name)])}<section class="card" style="background:${c.grad};padding:0;overflow:hidden"><div style="padding:22px;display:grid;gap:10px;position:relative;background:linear-gradient(90deg,rgba(0,0,0,.55),transparent)"><span style="position:absolute;right:14px;top:6px;font-size:6rem;filter:drop-shadow(0 8px 16px rgba(0,0,0,.5))" aria-hidden="true">${c.icon}</span><h1>${slug === 'animals' ? 'Animal Size Comparison Game' : slug === 'dinosaurs' ? 'Dinosaur Size Comparison Game' : slug === 'space' ? 'Planet Size Comparison Game' : esc(c.name)}</h1><p style="max-width:70%">${slug === 'animals' ? 'Compare the sizes of amazing animals, from tiny creatures to giant whales. Make your guess, reveal the real measurement and discover how big wildlife really is.' : slug === 'dinosaurs' ? 'Compare dinosaur sizes and discover how massive prehistoric creatures really were. Estimate their length or height, then reveal the sourced measurement.' : slug === 'space' ? 'Compare the sizes of planets in our solar system. Guess how Earth, Mars, Jupiter and other worlds measure up using their diameters.' : esc(c.desc)}</p><div class="row"><span class="pill">${c.questions} verified questions</span><span class="pill">Target: ${c.target}</span></div></div></section>
       <div class="card sec"><h2>Difficulty</h2>${diffChips(diff)}<p style="margin-top:18px"><button class="btn block" id="go">▶ Play ${esc(c.short)}</button></p></div>
       <section class="sec card"><h2>${slug === 'animals' ? 'Explore animal sizes' : slug === 'dinosaurs' ? 'How dinosaur sizes are estimated' : slug === 'space' ? 'Understanding planet size comparisons' : 'About this category'}</h2><p class="muted">${esc(CAT_EXTRA[slug])}</p><p class="muted" style="margin-top:10px">${slug === 'animals' ? 'An animal size comparison is only meaningful when the same type of measurement is compared. A whale’s body length, a bird’s wingspan and a giraffe’s shoulder height describe different dimensions.' : slug === 'dinosaurs' ? 'Fossil evidence is incomplete, so dinosaur length and height estimates can vary between sources. Check the measurement definition and source shown with each answer.' : slug === 'space' ? 'Planet size is commonly compared by diameter. Equatorial and polar diameters can differ, especially for rapidly rotating gas giants; use the measurement definition shown with each answer.' : ''}</p><p style="margin-top:10px"><a href="/explore?cat=${slug}" data-link style="color:var(--blue);text-decoration:underline">Browse every ${esc(c.short)} size with sources →</a></p><p style="margin-top:10px"><a href="/size-comparison" data-link style="color:var(--blue);text-decoration:underline">Try the size comparison game →</a></p></section>`);
