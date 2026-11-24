@@ -13,7 +13,7 @@ const ROUTE_SEO = {
   '/dinosaurs': { title: 'Dinosaur Size Comparison Game | SizeRoyale', description: 'Compare dinosaur sizes and discover how massive prehistoric creatures really were. Test your knowledge with SizeRoyale.', h1: 'Dinosaur Size Comparison Game' },
   '/space': { title: 'Planet Size Comparison | SizeRoyale', description: 'Compare the sizes of planets in our solar system. Discover how Earth, Mars, Jupiter and other worlds measure up.', h1: 'Planet Size Comparison Game' }
 };
-const DEFAULT_SEO = ROUTE_SEO['/'];
+const DEFAULT_SEO = { title: 'SizeRoyale – Guess the Size Game', description: 'Play free size-guessing and size comparison games with animals, dinosaurs, planets and more.' };
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 const NOSCRIPT = '<noscript><main><h1>SizeRoyale size comparison game</h1><p>Play free size comparison games for animals, dinosaurs, planets and more. JavaScript is required to play.</p></main></noscript>';
 
