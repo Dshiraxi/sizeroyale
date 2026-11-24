@@ -16,7 +16,6 @@ const ROUTE_SEO = {
 const DEFAULT_SEO = ROUTE_SEO['/'];
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 const NOSCRIPT = '<noscript><main><h1>SizeRoyale size comparison game</h1><p>Play free size comparison games for animals, dinosaurs, planets and more. JavaScript is required to play.</p></main></noscript>';
-const NOSCRIPT = '<noscript><main><h1>Guess the Size Game</h1><p>Play SizeRoyale to guess real-world sizes, take daily challenges and compete with friends. JavaScript is required to play.</p></main></noscript>';
 
 export default {
   async fetch(request, env, ctx) {
@@ -26,8 +25,8 @@ export default {
     const type = response.headers.get('content-type') || '';
     if (!type.includes('text/html')) return response;
     let html = await response.text();
-    const route = ROUTE_SEO[url.pathname.replace(/\\/$/, '') || '/'] || DEFAULT_SEO;
-    const canonical = SITE + (url.pathname === '/' ? '/' : url.pathname.replace(/\\/$/, ''));
+    const route = ROUTE_SEO[url.pathname.replace(/\/$/, '') || '/'] || DEFAULT_SEO;
+    const canonical = SITE + (url.pathname === '/' ? '/' : url.pathname.replace(/\/$/, ''));
     const title = escapeHtml(route.title);
     const description = escapeHtml(route.description);
     const HEAD = `<title>${title}</title>
