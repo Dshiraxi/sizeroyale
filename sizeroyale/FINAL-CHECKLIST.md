@@ -21,11 +21,13 @@
 - [x] Browser-tested SEO metadata for `/`, `/size-comparison`, `/animals`, `/faq`, `/profile`, and an unknown URL (404 + noindex).
 - [x] Chromium-tested comparison selectors: same measurement kind only, distinct items, source links rendered.
 - [x] Chromium-tested desktop/mobile layouts for horizontal overflow and uncaught browser errors; screenshots captured.
-- [ ] Full PWA install/offline and physical-device touch testing remain outstanding.
+- [x] Manifest theme colors, service-worker cache version, comparison-helper precache and offline fallback styling updated.
+- [ ] Chromium PWA smoke assertions are queued for CI; physical-device install/offline and touch testing remain outstanding.
 
 ## Data and launch items still outstanding
 - [ ] Question bank currently contains 100 questions (Animals 16, Dinosaurs 14, Space 17, Geography 18, Vehicles 18, Everyday Objects 17), not the 500-question target.
-- [ ] Existing measurement values and source URLs still need a factual audit; do not add unverified measurements.
+- [x] Selected records checked against authoritative sources; CH-47 rotor measurement corrected. See `docs/FACT-CHECK-REPORT.md`.
+- [ ] Full source-by-source verification of all 100 records remains outstanding; many legacy records still cite Wikipedia and some subjects are near-duplicates.
 - [ ] Privacy and Terms copy still needs appropriate review.
 - [ ] Confirm live sitemap, canonicals and Google Search Console after the user deploys.
 - [ ] Complete browser/device testing before production deployment.
