@@ -168,5 +168,6 @@ Q.push(...require('./question-expansion-4'));
 Q.push(...require('./question-expansion-5'));
 Q.push(...require('./question-expansion-6'));
 Q.push(...require('./question-expansion-7'));
+Q.push(...require('./question-expansion-8'));
 
 module.exports = { QUESTIONS: Q, CATEGORIES };
