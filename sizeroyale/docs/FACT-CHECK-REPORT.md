@@ -5,7 +5,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 240 question records are now present: the original 100 plus seven curated 20-record expansion batches.
+- 260 question records are now present: the original 100 plus eight curated 20-record expansion batches.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
 - The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
@@ -38,6 +38,10 @@ Added 20 marine-animal length questions from NOAA Fisheries technical/species re
 ## Seventh curated expansion (20 records)
 
 Added 20 terrestrial and pinniped dimensions from Smithsonian National Zoo, National Park Service and NOAA references. This batch specifies shoulder height, total/body length, tail length and sex-specific length separately where sources distinguish them; the moose antler measurement uses its own `Antler spread` kind to avoid treating it as wingspan.
+
+## Eighth curated expansion (20 records)
+
+Added 20 infrastructure dimensions from bridge authorities, canal operators, government agencies and Guinness World Records. Definitions distinguish total length, main span, structural height, water-surface width and channel depth so values with different measurement boundaries are not mixed.
 
 ## Corrections made in this pass
 
