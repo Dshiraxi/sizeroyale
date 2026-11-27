@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const { QUESTIONS, CATEGORIES } = require('../data/questions');
 
 test('question bank has at least 220 entries and unique stable IDs', () => {
-  assert.ok(QUESTIONS.length >= 220, 'question bank should contain at least 140 questions');
+  assert.ok(QUESTIONS.length >= 220, 'question bank should contain at least 220 questions');
   const ids = QUESTIONS.map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length, 'question IDs must be unique');
 });
@@ -43,7 +43,6 @@ test('curated expansions contain 120 uniquely identified sourced records', () =>
       host === 'ocean.si.edu' ||
       host === 'www.airbus.com' ||
       host === 'www.boeing.com' ||
-      host === 'www.nps.gov' ||
       host === 'www.aircraft.airbus.com' ||
       host === 'ssd.jpl.nasa.gov' ||
       host === 'nssdc.gsfc.nasa.gov' ||
@@ -52,8 +51,7 @@ test('curated expansions contain 120 uniquely identified sourced records', () =>
       host === 'nationalzoo.si.edu' ||
       host === 'www.nationalzoo.si.edu' ||
       host === 'media.fisheries.noaa.gov' ||
-      host === 'www.greateratlantic.fisheries.noaa.gov' ||
-      host === 'www.nps.gov',
+      host === 'www.greateratlantic.fisheries.noaa.gov',
       q.id + ' must cite an approved institution or manufacturer source'
     );
   }
