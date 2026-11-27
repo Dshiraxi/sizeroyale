@@ -16,14 +16,15 @@
 - [x] New comparison helper tests: 4/4 passed in an isolated Node test harness.
 - [x] Worker module syntax check: passed.
 - [x] Cloudflare preview command completed successfully after the preview-variable fix (the preview has no active URL).
-- [ ] Run the complete repository `npm test` suite after checking out this branch.
-- [ ] Run the project Wrangler build / dry run using the repository's local Wrangler version.
-- [ ] Test route metadata for `/`, `/size-comparison`, `/animals`, `/faq`, `/profile`, and an unknown URL.
-- [ ] Test comparison selector behavior in a real browser.
-- [ ] Check desktop and mobile layouts, touch interactions, PWA and console errors.
+- [x] Complete repository `npm test` suite: 26/26 passed.
+- [x] Wrangler Worker bundle `deploy --dry-run` passed; no deployment.
+- [x] Browser-tested SEO metadata for `/`, `/size-comparison`, `/animals`, `/faq`, `/profile`, and an unknown URL (404 + noindex).
+- [x] Chromium-tested comparison selectors: same measurement kind only, distinct items, source links rendered.
+- [x] Chromium-tested desktop/mobile layouts for horizontal overflow and uncaught browser errors; screenshots captured.
+- [ ] Full PWA install/offline and physical-device touch testing remain outstanding.
 
 ## Data and launch items still outstanding
-- [ ] Question bank currently contains 52 questions, not the 500-question target.
+- [ ] Question bank currently contains 100 questions (Animals 16, Dinosaurs 14, Space 17, Geography 18, Vehicles 18, Everyday Objects 17), not the 500-question target.
 - [ ] Existing measurement values and source URLs still need a factual audit; do not add unverified measurements.
 - [ ] Privacy and Terms copy still needs appropriate review.
 - [ ] Confirm live sitemap, canonicals and Google Search Console after the user deploys.
