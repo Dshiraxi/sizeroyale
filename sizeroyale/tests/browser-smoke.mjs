@@ -15,7 +15,11 @@ async function checkSeo(route, { title, canonical = true, noindex = false } = {}
   const descriptions = [...html.matchAll(/<meta\s+name=["']description["']/gi)];
   assert.equal(titles.length, 1, route + ' should have exactly one title');
   assert.equal(descriptions.length, 1, route + ' should have exactly one meta description');
-  const titleText = html.match(/<title>(.*?)<\\/title>/i)?.[1] || '';\n  if (title) assert.ok(titleText.toLowerCase().includes(title.toLowerCase()), route + ' title mismatch: ' + titleText);
+  const lowerHtml = html.toLowerCase();
+  const titleStart = lowerHtml.indexOf('<title>');
+  const titleEnd = lowerHtml.indexOf('</title>');
+  const titleText = titleStart >= 0 && titleEnd > titleStart ? html.slice(titleStart + 7, titleEnd) : '';
+  if (title) assert.ok(titleText.toLowerCase().includes(title.toLowerCase()), route + ' title mismatch: ' + titleText);
   if (canonical) assert.ok(html.includes('rel="canonical" href="https://sizeroyale.fun' + (route === '/' ? '/' : route.replace(/\/$/, '')) + '"'), route + ' canonical mismatch');
   assert.equal(/<meta\s+name=["']robots["']\s+content=["']noindex,follow["']/i.test(html), noindex, route + ' robots noindex mismatch');
   return html;
