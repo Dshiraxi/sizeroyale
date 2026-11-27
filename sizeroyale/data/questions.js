@@ -162,5 +162,6 @@ const CATEGORIES = [
 ];
 
 Q.push(...require('./question-expansion'));
+Q.push(...require('./question-expansion-2'));
 
 module.exports = { QUESTIONS: Q, CATEGORIES };
