@@ -21,7 +21,7 @@
 
 ## Remaining before production launch
 - [ ] Question bank currently has 120 entries; the target of 500 is not yet reached.
-- [ ] Continue source-by-source verification; the 80 additions have agency/institution/manufacturer/space-agency citations, but legacy records still need review and near-duplicates need cleanup.
+- [ ] Continue source-by-source verification; the 100 additions have agency/institution/manufacturer/space-agency/wildlife-institution citations, but legacy records still need review and near-duplicates need cleanup.
 - [ ] Review privacy and terms copy.
 - [ ] Manual physical-device touch, install and offline testing.
 - [ ] After deployment, verify live sitemap, canonicals and Google Search Console.
