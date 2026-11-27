@@ -73,3 +73,16 @@ test('legacy question IDs and title mapping remain unchanged for saved history',
   const actual = Object.fromEntries(legacy.map((q) => [q.id, q.title]));
   assert.deepEqual(actual, expected, 'legacy question IDs/titles must not shift during cleanup');
 });
+
+
+test('retired near-duplicates stay available for history but are excluded from new question pools', () => {
+  const { RETIRED_FROM_NEW_ROUNDS, getActiveQuestions } = require('../data/question-policy');
+  const active = getActiveQuestions(QUESTIONS);
+  const ids = new Set(QUESTIONS.map((q) => q.id));
+  for (const id of Object.keys(RETIRED_FROM_NEW_ROUNDS)) {
+    assert.ok(ids.has(id), 'retired ID must remain in the full bank for historical lookup: ' + id);
+    assert.ok(!active.some((q) => q.id === id), 'retired ID must not enter new rounds: ' + id);
+  }
+  assert.equal(Object.keys(RETIRED_FROM_NEW_ROUNDS).length, 16);
+  assert.equal(active.length, QUESTIONS.length - 16);
+});
