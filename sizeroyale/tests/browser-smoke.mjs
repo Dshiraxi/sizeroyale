@@ -74,8 +74,6 @@ try {
   await page.screenshot({ path: path.join(out, 'desktop-size-comparison.png'), fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.reload({ waitUntil: 'networkidle' });
-  await page.locator('#startCompare').waitFor({ timeout: 15000 });
   const mobileMetrics = await page.evaluate(() => ({
     width: document.documentElement.scrollWidth,
     viewport: document.documentElement.clientWidth,
