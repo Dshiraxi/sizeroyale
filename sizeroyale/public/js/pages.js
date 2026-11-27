@@ -158,17 +158,7 @@
   register('/size-comparison', async () => {
     setTitle('Size Comparison Game'); const fx = await facts(); const sorted = fx.slice().sort((a, b) => a.shortName.localeCompare(b.shortName));
     const prompts = { Length: 'Which is longer?', Height: 'Which is taller?', Wingspan: 'Which has a wider wingspan?', Diameter: 'Which has a larger diameter?', Depth: 'Which is deeper?' };
-    const groups = new Map();
-    fx.forEach((f) => { if (!groups.has(f.kind)) groups.set(f.kind, []); groups.get(f.kind).push(f); });
-    const candidates = [];
-    groups.forEach((items) => {
-      for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
-        if (items[i].id !== items[j].id) {
-          const ratio = Math.max(items[i].meters, items[j].meters) / Math.min(items[i].meters, items[j].meters);
-          if (ratio > 1.01) candidates.push({ pair: [items[i], items[j]], ratio });
-        }
-      }
-    });
+    const candidates = SRComparison.buildPairs(fx);
     const shufflePairs = (items) => { const a = items.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
     const levels = {
       easy: { label: 'Easy', hint: 'Big size differences', test: (r) => r >= 5 },
@@ -177,15 +167,21 @@
     };
     let difficulty = 'hard', rounds = [];
     let index = 0, points = 0, selected = null;
-    const opts = (sel) => sorted.map((f) => `<option value="${f.id}" ${f.id === sel ? 'selected' : ''}>${f.icon} ${esc(f.shortName)} (${esc(f.kind.toLowerCase())})</option>`).join('');
+    const opts = (sel, kind, excludeId) => sorted.filter((f) => (!kind || f.kind === kind) && f.id !== excludeId).map((f) => `<option value="${f.id}" ${f.id === sel ? 'selected' : ''}>${f.icon} ${esc(f.shortName)} (${esc(f.kind.toLowerCase())})</option>`).join('');
     const renderCompareTool = () => {
       const a = $('#cA'), b = $('#cB'); if (!a || !b) return;
-      const A1 = fx.find((f) => f.id === a.value), B1 = fx.find((f) => f.id === b.value), max = Math.max(A1.meters, B1.meters);
+      const A1 = fx.find((f) => f.id === a.value), B1 = fx.find((f) => f.id === b.value);
+      const comparison = SRComparison.compare(A1, B1);
+      if (!comparison) {
+        $('#cOut').innerHTML = '<p class="note">Choose two different items that use the same measurement type.</p>';
+        return;
+      }
+      const { larger: big, smaller: small, ratio } = comparison;
+      const max = Math.max(A1.meters, B1.meters);
       const bar = (f, col) => `<div class="cmpbar"><div class="t"><span>${f.icon} <b>${esc(f.shortName)}</b> <span class="muted">(${esc(f.kind.toLowerCase())})</span></span><span>${esc(fmtBoth(f.meters))}</span></div><div class="tr"><i style="width:${Math.max(0.4, (f.meters / max) * 100)}%;background:${col}"></i></div></div>`;
-      const big = A1.meters >= B1.meters ? A1 : B1, small = big === A1 ? B1 : A1;
-      $('#cOut').innerHTML = `${bar(A1, 'linear-gradient(90deg,#35B9FF,#873CFA)')}${bar(B1, 'linear-gradient(90deg,#E84AB7,#FFC94A)')}<p style="margin-top:14px">${A1.id === B1.id ? 'Same item – pick two different things.' : `<b>${esc(big.shortName)}</b> is about <b class="gold">${fmt(big.meters / small.meters)}×</b> the ${esc(big.kind.toLowerCase())} of <b>${esc(small.shortName)}</b>.`}</p><p class="note">Sources: <a href="${esc(A1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(A1.sourceName)}</a> · <a href="${esc(B1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(B1.sourceName)}</a></p>`;
+      $('#cOut').innerHTML = `${bar(A1, 'linear-gradient(90deg,#3B82F6,#2563EB)')}${bar(B1, 'linear-gradient(90deg,#2F9E73,#F2B544)')}<p style="margin-top:14px"><b>${esc(big.shortName)}</b> is about <b class="gold">${fmt(ratio)}×</b> the ${esc(comparison.kind.toLowerCase())} of <b>${esc(small.shortName)}</b>.</p><p class="note">Sources: <a href="${esc(A1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(A1.sourceName)}</a> · <a href="${esc(B1.sourceUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">${esc(B1.sourceName)}</a></p>`;
     };
-    const shell = (content) => view(`${crumbs(['/play', 'Play'], ['', 'Size Comparison'])}<div class="prose"><span class="pill badge">⚖️ HEAD-TO-HEAD CHALLENGE</span><h1>Size <span class="grad">Comparison</span> Game</h1><p>Two real-world things. One question: which is bigger in the measurement shown? Pick the right answer across ten rounds and score up to 10,000 points.</p></div>${content}<details class="card compare-tool-more" style="margin:22px auto;max-width:760px"><summary><b>🔎 Compare any two things</b><span class="note"> · Explore exact measurements and sources</span></summary><div class="row compare-selects" style="margin-top:16px"><div class="field" style="flex:1;margin:0"><label for="cA">Thing A</label><select id="cA">${opts('animals-001')}</select></div><div class="field" style="flex:1;margin:0"><label for="cB">Thing B</label><select id="cB">${opts('vehicles-001')}</select></div></div><div id="cOut" style="margin-top:18px"></div></details>`);
+        const shell = (content) => view(`${crumbs(['/play', 'Play'], ['', 'Size Comparison'])}<div class="prose"><span class="pill badge">⚖️ HEAD-TO-HEAD CHALLENGE</span><h1>Size <span class="grad">Comparison</span> Game</h1><p>Two real-world things. One question: which is bigger in the measurement shown? Pick the right answer across ten rounds and score up to 10,000 points.</p></div>${content}<details class="card compare-tool-more" style="margin:22px auto;max-width:760px"><summary><b>🔎 Compare any two things</b><span class="note"> · Explore exact measurements and sources</span></summary><div class="row compare-selects" style="margin-top:16px"><div class="field" style="flex:1;margin:0"><label for="cA">Thing A</label><select id="cA">${opts('animals-001')}</select></div><div class="field" style="flex:1;margin:0"><label for="cB">Thing B</label><select id="cB">${opts('vehicles-001')}</select></div></div><div id="cOut" style="margin-top:18px"></div></details>`);
     function draw() {
       if (index >= rounds.length) {
         const grade = points >= 8000 ? 'Size legend!' : points >= 6000 ? 'Size genius!' : points >= 3500 ? 'Great eye!' : 'Keep practicing!';
@@ -235,7 +231,22 @@
       };
     });
     $('#startCompare').onclick = start;
-    const ca = $('#cA'), cb = $('#cB'); if (ca && cb) { ca.onchange = renderCompareTool; cb.onchange = renderCompareTool; renderCompareTool(); }
+    const ca = $('#cA'), cb = $('#cB');
+    const syncCompareSelectors = (changed) => {
+      if (!ca || !cb) return;
+      const A1 = fx.find((f) => f.id === ca.value), B1 = fx.find((f) => f.id === cb.value);
+      if (changed === 'a' && A1) {
+        const compatible = SRComparison.compatibleItems(sorted, A1);
+        const selected = compatible.find((f) => f.id === cb.value) || compatible[0];
+        cb.innerHTML = compatible.length ? opts(selected.id, A1.kind, A1.id) : '<option value="">No compatible item</option>';
+      } else if (changed === 'b' && B1) {
+        const compatible = SRComparison.compatibleItems(sorted, B1);
+        const selected = compatible.find((f) => f.id === ca.value) || compatible[0];
+        ca.innerHTML = compatible.length ? opts(selected.id, B1.kind, B1.id) : '<option value="">No compatible item</option>';
+      }
+      renderCompareTool();
+    };
+    if (ca && cb) { ca.onchange = () => syncCompareSelectors('a'); cb.onchange = () => syncCompareSelectors('b'); syncCompareSelectors('a'); }
   });
 
   /* ---------------- DAILY CHALLENGE ---------------- */
