@@ -28,84 +28,34 @@
 
   /* ---------------- HOME ---------------- */
   register('/', async () => {
-    setTitle('');
-    const m = S.meta; const cats = m.categories;
-    const app = view(`
-      <section class="sr-home-hero" aria-labelledby="home-title">
-        <div class="sr-hero-copy">
-          <span class="sr-eyebrow"><span class="sr-crown">♛</span> SIZE DISCOVERY, MADE PLAYFUL</span>
-          <h1 id="home-title">Guess the Size.<br><span>Compare the World.</span></h1>
-          <p>From the tiniest creatures to the biggest landmarks, make your estimate, discover the real measurement and see the world differently.</p>
-          <div class="sr-hero-actions"><a class="btn" href="/play" data-link>Start guessing <span aria-hidden="true">↗</span></a><a class="sr-text-link" href="/size-comparison" data-link>Explore comparisons <span aria-hidden="true">→</span></a></div>
-          <div class="sr-proof-pills"><span>✓ Real-world measurements</span><span>✓ Free to play</span></div>
-        </div>
-        <div class="sr-hero-visual" aria-label="Illustration of the world and different sizes">
-          <div class="sr-orbit sr-orbit-one"></div><div class="sr-orbit sr-orbit-two"></div>
-          <div class="sr-world">🌍</div><span class="sr-float sr-whale">🐋</span><span class="sr-float sr-dino">🦖</span><span class="sr-float sr-rocket">🚀</span>
-          <div class="sr-size-note"><b>One world.</b><span>Endless sizes.</span></div>
-        </div>
-      </section>
-
-      <section class="sr-feature-grid" aria-label="Main SizeRoyale experiences">
-        <a class="sr-feature sr-feature-game" href="/guess-the-size" data-link>
-          <div class="sr-feature-top"><span class="sr-feature-tag">THE GUESSING GAME</span><span class="sr-feature-arrow">↗</span></div>
-          <div class="sr-feature-art sr-art-blue"><span>🎯</span><i>📏</i><b>?</b></div>
-          <h2>Guess the Size</h2><p>How tall? How long? How huge? Make your best estimate and earn points for getting close.</p>
-          <span class="sr-feature-cta">Play the game <b>→</b></span>
-        </a>
-        <a class="sr-feature sr-feature-compare" href="/size-comparison" data-link>
-          <div class="sr-feature-top"><span class="sr-feature-tag">THE COMPARISON TOOL</span><span class="sr-feature-arrow">↗</span></div>
-          <div class="sr-feature-art sr-art-green"><span>🐘</span><i>↔</i><b>🦒</b></div>
-          <h2>Animal Size Comparison</h2><p>Put animals and real-world things side by side. Choose which is bigger and learn the measurements behind it.</p>
-          <span class="sr-feature-cta">Compare sizes <b>→</b></span>
-        </a>
-      </section>
-
-      <section class="sr-live-stats" aria-label="SizeRoyale community statistics">
-        <div><strong>${m.totalQuestions}</strong><span>Source-linked questions</span></div><div><strong>${m.categories.length}</strong><span>Worlds to explore</span></div><div><strong>${m.players.toLocaleString('en-US')}</strong><span>Players in the arena</span></div>
-      </section>
-
-      <section class="sr-section">
-        <div class="sr-section-heading"><div><span class="sr-eyebrow">YOUR NEXT ADVENTURE</span><h2>Pick a challenge</h2></div><a href="/play" data-link>All game modes <span>→</span></a></div>
-        <div class="sr-challenge-grid">
-          <a class="sr-challenge sr-challenge-daily" href="/daily-challenge" data-link><span class="sr-challenge-icon">🏆</span><span class="sr-challenge-label">EVERY DAY</span><h3>Daily Challenge</h3><p>Five shared questions. One daily score to beat.</p><b>Take today's challenge →</b></a>
-          <a class="sr-challenge sr-challenge-friends" href="/multiplayer" data-link><span class="sr-challenge-icon">🎮</span><span class="sr-challenge-label">PLAY TOGETHER</span><h3>Friends Battle</h3><p>Invite friends and find out who has the sharpest size sense.</p><b>Start a room →</b></a>
-          <a class="sr-challenge sr-challenge-explore" href="/explore" data-link><span class="sr-challenge-icon">🧭</span><span class="sr-challenge-label">DISCOVER</span><h3>Explore the World</h3><p>Browse measurements, facts and sources across every category.</p><b>Explore sizes →</b></a>
-        </div>
-      </section>
-
-      <section class="sr-section sr-animal-section">
-        <div class="sr-animal-copy"><span class="sr-eyebrow">WILDLY DIFFERENT SIZES</span><h2>From tiny to towering.<br><span>Meet the animal world.</span></h2><p>Compare the creatures you know with the ones that surprise you. Discover their real dimensions, then test your instincts in the comparison game.</p><a class="btn sr-green-btn" href="/size-comparison" data-link>Compare animal sizes <span>→</span></a></div>
-        <div class="sr-animal-scene" aria-hidden="true"><div class="sr-animal-sun"></div><span class="sr-elephant">🐘</span><span class="sr-giraffe">🦒</span><span class="sr-bird">🦜</span><div class="sr-scene-caption">BIG · SMALL · AMAZING</div></div>
-      </section>
-
-      <section class="sr-section">
-        <div class="sr-section-heading"><div><span class="sr-eyebrow">FIND YOUR FASCINATION</span><h2>Popular categories</h2></div><a href="/play" data-link>Browse all <span>→</span></a></div>
-        <div class="sr-category-grid">${cats.map((c, i) => `<a class="sr-category-card sr-cat-${i % 6}" href="${c.path}" data-link><span class="sr-category-emoji">${c.icon}</span><span class="sr-category-name">${esc(c.short)}</span><span class="sr-category-count">${c.questions} questions</span><span class="sr-category-arrow">↗</span></a>`).join('')}</div>
-      </section>
-
-      <section class="sr-section sr-popular-section">
-        <div class="sr-section-heading"><div><span class="sr-eyebrow">A LITTLE PERSPECTIVE</span><h2>Popular size comparisons</h2></div><a href="/size-comparison" data-link>Compare anything <span>→</span></a></div>
-        <div id="homeComparisons" class="sr-popular-grid"><div class="sr-popular-placeholder">Discovering fascinating size pairs…</div></div>
-      </section>
-
-      <section class="sr-bottom-banner"><div><span class="sr-eyebrow">READY, PLAYER?</span><h2>Your next great guess is waiting.</h2><p>Jump in, learn something surprising and climb the leaderboard.</p></div><a class="btn" href="/play" data-link>Play SizeRoyale <span>→</span></a></section>
+    setTitle('Guess the Size & Compare Animals');
+    view(`
+      <div class="sr-clean-home">
+        <header class="sr-clean-intro">
+          <span class="sr-clean-kicker">SizeRoyale · Explore real-world sizes</span>
+          <h1>How big is it?<br><span>Make your best guess.</span></h1>
+          <p>Test your size sense, then compare animals and fascinating things from the real world. Two simple ways to explore size.</p>
+        </header>
+        <section class="sr-clean-cards" aria-label="Choose your SizeRoyale experience">
+          <a class="sr-clean-card sr-clean-card--blue" href="/guess-the-size" data-link>
+            <div class="sr-clean-card-top"><span>01 · The guessing game</span><span aria-hidden="true">↗</span></div>
+            <div class="sr-clean-card-icon" aria-hidden="true"><span>🎯</span><em>?</em><span>📏</span></div>
+            <h2>Guess the Size</h2>
+            <p>Estimate the height, length or scale of real things. Get closer to the answer, earn points and sharpen your instincts.</p>
+            <span class="sr-clean-card-link">Start guessing <b aria-hidden="true">→</b></span>
+          </a>
+          <a class="sr-clean-card sr-clean-card--green" href="/size-comparison" data-link>
+            <div class="sr-clean-card-top"><span>02 · Compare the world</span><span aria-hidden="true">↗</span></div>
+            <div class="sr-clean-card-icon" aria-hidden="true"><span>🐘</span><em>↔</em><span>🦒</span></div>
+            <h2>Animal Size Comparison</h2>
+            <p>See animals side by side, compare their real measurements and discover surprising differences in size.</p>
+            <span class="sr-clean-card-link">Compare animals <b aria-hidden="true">→</b></span>
+          </a>
+        </section>
+        <p class="sr-clean-note">Curiosity starts with one comparison.</p>
+      </div>
     `);
-    const [top, fx] = await Promise.all([
-      api('/leaderboard/global').catch(() => ({ rows: [] })),
-      facts().catch(() => [])
-    ]);
-    if (!app.isConnected || location.pathname !== '/') return;
-    const by = (id) => fx.find((f) => f.id === id);
-    const pairs = [['animals-001', 'dinosaurs-001'], ['animals-003', 'animals-002'], ['geography-001', 'geography-003']].map(([a,b]) => [by(a),by(b)]).filter((p) => p[0] && p[1]);
-    const comparisons = app.querySelector('#homeComparisons');
-    if (comparisons && pairs.length) comparisons.innerHTML = pairs.map(([a,b],i) => {
-      const big = a.meters >= b.meters ? [a,b] : [b,a];
-      return `<a class="sr-popular-card sr-popular-${i}" href="/size-comparison" data-link><span class="sr-pair-emoji">${big[0].icon}<i>↔</i>${big[1].icon}</span><span class="sr-pair-title">${esc(big[0].shortName)} <small>vs</small> ${esc(big[1].shortName)}</span><span class="sr-pair-detail">${esc(fmtLen(big[0].meters))} <b>·</b> ${esc(fmtLen(big[1].meters))}</span><span class="sr-pair-link">Explore pair ↗</span></a>`;
-    }).join('');
   });
-
-  /* ---------------- PLAY / MODES / CATEGORY SELECTION ---------------- */
   register('/play', async () => {
     setTitle('Play'); const cats = S.meta.categories;
     view(`${crumbs(['', 'Play'])}<h1>Choose how to <span class="grad">play</span></h1><p class="muted" style="margin:8px 0 18px">Four ways to test your size sense.</p>
