@@ -411,3 +411,11 @@ body::before{display:none}
 @media(max-width:520px){
   .field input,.field textarea,.field select{font-size:16px}
 }
+
+
+/* Final responsive refinements from desktop/mobile screenshots */
+#authSlot{display:flex;align-items:center;gap:6px;flex-shrink:0}
+#authSlot>a.btn{white-space:nowrap;min-width:max-content}
+@media(max-width:520px){
+  .compare-selects .field{flex:1 1 100%!important;min-width:100%}
+}
