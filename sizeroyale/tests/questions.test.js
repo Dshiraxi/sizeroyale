@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const { QUESTIONS, CATEGORIES } = require('../data/questions');
 
 test('question bank has at least 140 entries and unique stable IDs', () => {
-  assert.ok(QUESTIONS.length >= 140, 'question bank should contain at least 100 questions');
+  assert.ok(QUESTIONS.length >= 140, 'question bank should contain at least 140 questions');
   const ids = QUESTIONS.map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length, 'question IDs must be unique');
 });
@@ -42,6 +42,7 @@ test('curated expansions contain 40 uniquely identified sourced records', () => 
       host === 'home.nps.gov' ||
       host === 'ocean.si.edu' ||
       host === 'www.airbus.com' ||
+      host === 'www.boeing.com' ||
       host === 'www.aircraft.airbus.com' ||
       host === 'ssd.jpl.nasa.gov',
       q.id + ' must cite an approved institution or manufacturer source'
