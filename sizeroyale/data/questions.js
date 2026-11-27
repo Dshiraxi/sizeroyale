@@ -112,7 +112,7 @@ add('geography', '🏔️', 'Height', 'How tall is K2?', 'Elevation of K2 above 
 add('vehicles', '🚗', 'Length', 'How long is a Tesla Model 3?', 'Approximate overall length of a recent Tesla Model 3.', 4.72, 'easy', 'The Model 3 is a mid-size electric sedan.', 'Wikipedia – Tesla Model 3', W('Tesla_Model_3'));
 add('vehicles', '🛻', 'Length', 'How long is a Ford F-150?', 'Approximate overall length of a full-size Ford F-150 pickup configuration.', 5.89, 'medium', 'The F-150 has been one of the best-selling pickup trucks in the United States.', 'Wikipedia – Ford F-Series', W('Ford_F-Series'));
 add('vehicles', '🚄', 'Length', 'How long is a Shinkansen train set?', 'Approximate length of a 16-car Tokaido Shinkansen train set.', 400, 'hard', 'A 16-car Shinkansen train can be about 400 metres long.', 'Wikipedia – Shinkansen', W('Shinkansen'));
-add('vehicles', '🚁', 'Length', 'How long is a Boeing CH-47 Chinook helicopter?', 'Overall length including rotors, approximately.', 30.1, 'hard', 'The Chinook uses tandem rotors instead of a tail rotor.', 'Wikipedia – Boeing CH-47 Chinook', W('Boeing_CH-47_Chinook'));
+add('vehicles', '🚁', 'Rotor span', 'What is the operating rotor length of a CH-47 Chinook?', 'Tip-to-tip length of the tandem rotors while operating, as specified by Boeing; this is not the fuselage length.', 30.1, 'hard', 'The Chinook uses tandem rotors instead of a tail rotor.', 'Boeing – H-47 Chinook specifications', 'https://www.boeing.com/defense/military-rotorcraft/h-47-chinook');
 
 // EVERYDAY OBJECTS
 add('everyday-objects', '📱', 'Length', 'How tall is a typical smartphone?', 'Approximate height of a modern large-screen smartphone.', 0.16, 'easy', 'Smartphone dimensions vary by model and screen size.', 'Wikipedia – Smartphone', W('Smartphone'));
