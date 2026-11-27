@@ -77,3 +77,29 @@ Legacy question IDs are generated from category order (for example, animals-001)
 3. Mark each pair **keep-distinct**, **merge for new rounds**, or **replace with a verified new fact**.
 4. Preserve the old ID mapping for historical results.
 5. Add regression tests for duplicate policy and stable IDs before changing the live selection pool.
+
+
+## Stable ID preparation completed
+
+The 100 legacy records have now been converted from category-order-generated IDs to explicit ID strings on the upgrade branch. The generated values were preserved exactly. A JSON snapshot at `tests/fixtures/legacy-question-ids.json` and a regression test now pin the complete legacy ID-to-title mapping, so future edits that shift IDs or reassign a saved-history reference fail the test. No questions have been removed, renamed, or excluded from new rounds in this pass.
+
+Candidate IDs from the legacy pairs above:
+
+| Candidate | Existing ID | Alternate ID |
+|---|---|---|
+| Giraffe height | animals-002 | animals-013 |
+| Emperor penguin height | animals-004 | animals-016 |
+| T. rex length | dinosaurs-001 | dinosaurs-011 |
+| Stegosaurus length | dinosaurs-006 | dinosaurs-012 |
+| Triceratops length | dinosaurs-002 | dinosaurs-013 |
+| Earth diameter | space-001 | space-014 |
+| Mars diameter | space-004 | space-015 |
+| Mercury diameter | space-007 | space-017 |
+| Venus diameter | space-008 | space-016 |
+| Eiffel Tower height | geography-002 | geography-016 |
+| Burj Khalifa height | geography-003 | geography-015 |
+| Statue of Liberty height | geography-004 | geography-017 |
+| Titanic length | vehicles-005 | vehicles-018 |
+| Size-5 football diameter | everyday-objects-002 | everyday-objects-016 |
+| Credit/bank card length | everyday-objects-004 | everyday-objects-017 |
+| Tennis ball diameter | everyday-objects-006 | everyday-objects-014 |
