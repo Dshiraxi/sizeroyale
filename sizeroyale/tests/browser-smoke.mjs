@@ -68,9 +68,15 @@ try {
   const desktopMetrics = await page.evaluate(() => ({
     width: document.documentElement.scrollWidth,
     viewport: document.documentElement.clientWidth,
-    background: getComputedStyle(document.body).backgroundColor
+    background: getComputedStyle(document.body).backgroundColor,
+    difficultyBackground: getComputedStyle(document.querySelector('.compare-level')).backgroundColor,
+    selectorBackground: getComputedStyle(document.querySelector('#cA')).backgroundColor,
+    selectorText: getComputedStyle(document.querySelector('#cA')).color
   }));
   assert.ok(desktopMetrics.width <= desktopMetrics.viewport + 1, 'desktop layout must not overflow horizontally');
+  assert.equal(desktopMetrics.difficultyBackground, 'rgb(255, 255, 255)', 'difficulty controls should use a light background');
+  assert.equal(desktopMetrics.selectorBackground, 'rgb(255, 255, 255)', 'comparison selectors should use a light background');
+  assert.equal(desktopMetrics.selectorText, 'rgb(23, 50, 79)', 'comparison selector text should have dark navy contrast');
   await page.screenshot({ path: path.join(out, 'desktop-size-comparison.png'), fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });
