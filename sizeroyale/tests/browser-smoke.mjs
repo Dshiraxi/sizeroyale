@@ -12,12 +12,12 @@ async function checkSeo(route, { title, canonical = true, noindex = false } = {}
   assert.equal(response.status, 200, route + ' should return HTTP 200');
   const html = await response.text();
   const titles = [...html.matchAll(/<title>/gi)];
-  const descriptions = [...html.matchAll(/<meta\\s+name=["']description["']/gi)];
+  const descriptions = [...html.matchAll(/<meta\s+name=["']description["']/gi)];
   assert.equal(titles.length, 1, route + ' should have exactly one title');
   assert.equal(descriptions.length, 1, route + ' should have exactly one meta description');
-  if (title) assert.match(html, new RegExp(title.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'), 'i'));
-  if (canonical) assert.ok(html.includes('rel="canonical" href="https://sizeroyale.fun' + route.replace(/\\/$/, '') + '"'), route + ' canonical mismatch');
-  assert.equal(/<meta\\s+name=["']robots["']\\s+content=["']noindex,follow["']/i.test(html), noindex, route + ' robots noindex mismatch');
+  if (title) assert.ok(html.toLowerCase().includes('<title>' + title.toLowerCase() + '</title>'), route + ' title mismatch');
+  if (canonical) assert.ok(html.includes('rel="canonical" href="https://sizeroyale.fun' + (route === '/' ? '/' : route.replace(/\/$/, '')) + '"'), route + ' canonical mismatch');
+  assert.equal(/<meta\s+name=["']robots["']\s+content=["']noindex,follow["']/i.test(html), noindex, route + ' robots noindex mismatch');
   return html;
 }
 
@@ -31,8 +31,8 @@ try {
   assert.match(home, /"@type":"WebApplication"/);
   await checkSeo('/size-comparison', { title: 'Size Comparison Game' });
   await checkSeo('/animals', { title: 'Animal Size Guessing Game' });
-  await checkSeo('/faq', { title: 'FAQ \\| SizeRoyale' });
-  await checkSeo('/profile', { title: 'Your Profile \\| SizeRoyale', noindex: true });
+  await checkSeo('/faq', { title: 'FAQ | SizeRoyale' });
+  await checkSeo('/profile', { title: 'Your Profile | SizeRoyale', noindex: true });
 
   const missing = await fetch(base + '/this-route-should-not-exist');
   assert.equal(missing.status, 404, 'unknown route must return 404');
@@ -51,7 +51,7 @@ try {
   const initialA = await a.inputValue();
   await a.selectOption({ index: 1 });
   const selectedLabel = await a.locator('option:checked').textContent();
-  const kind = selectedLabel.match(/\\(([^)]+)\\)/)?.[1];
+  const kind = selectedLabel.match(/\(([^)]+)\)/)?.[1];
   assert.ok(kind, 'selected item must expose its measurement kind');
   const compatibleLabels = await b.locator('option').allTextContents();
   assert.ok(compatibleLabels.length > 0, 'compatible selector should not be empty');
