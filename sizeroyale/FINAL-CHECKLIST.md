@@ -1,36 +1,30 @@
 # SizeRoyale – Final checklist
 
-## Changes prepared on branch `upgrade/route-seo-light-theme`
-- [x] Preserve the existing project architecture and domain.
-- [x] Preserve existing routes and scoring formula.
-- [x] Apply the requested light blue / white / navy / green theme direction.
-- [x] Add shared measurement-safe comparison helpers.
-- [x] Restrict manual comparison to matching measurement types.
-- [x] Add four comparison-helper tests.
-- [x] Make Cloudflare Worker SEO route-specific using `lib/seo.js`.
-- [x] Set the production Worker site URL to `https://sizeroyale.fun`.
-- [x] Add preview-scoped Wrangler variables to satisfy Cloudflare's PR preview build.
-- [x] Keep changes on a separate branch; do not change `main` or deploy.
+## Branch and scope
+- [x] Existing architecture, domain, route paths and scoring formula preserved.
+- [x] Light blue / white / navy / green visual direction applied.
+- [x] Measurement-safe comparison helpers and compatible selectors added.
+- [x] Worker route-specific SEO metadata, canonical site URL and unknown-route 404/noindex added.
+- [x] PWA theme/cache/precache updated.
+- [x] Changes remain on `upgrade/route-seo-light-theme`; PR #2 is open and draft.
+- [x] No merge or production deployment performed.
 
-## Checks completed
-- [x] New comparison helper tests: 4/4 passed in an isolated Node test harness.
-- [x] Worker module syntax check: passed.
-- [x] Cloudflare preview command completed successfully after the preview-variable fix (the preview has no active URL).
-- [x] Complete repository `npm test` suite: 26/26 passed.
-- [x] Wrangler Worker bundle `deploy --dry-run` passed; no deployment.
-- [x] Browser-tested SEO metadata for `/`, `/size-comparison`, `/animals`, `/faq`, `/profile`, and an unknown URL (404 + noindex).
-- [x] Chromium-tested comparison selectors: same measurement kind only, distinct items, source links rendered.
-- [x] Chromium-tested desktop/mobile layouts for horizontal overflow and uncaught browser errors; screenshots captured.
-- [x] Manifest theme colors, service-worker cache version, comparison-helper precache and offline fallback styling updated.
-- [ ] Chromium PWA smoke assertions are queued for CI; physical-device install/offline and touch testing remain outstanding.
+## Automated checks — latest run passed
+- [x] Node test suite: **29/29 passed**.
+- [x] Wrangler Worker `deploy --dry-run`: passed; no deployment.
+- [x] Chromium browser/route smoke: passed.
+- [x] SEO metadata on home, comparison, animals, FAQ and profile routes; unknown route 404 + noindex.
+- [x] Comparison selector compatibility, distinct choices and source output.
+- [x] Desktop/mobile horizontal-overflow and uncaught-error checks.
+- [x] PWA manifest theme, service-worker cache version and comparison helper precache assertions.
+- [x] Latest CI run: https://github.com/Dshiraxi/sizeroyale/actions/runs/45992337889
 
-## Data and launch items still outstanding
-- [ ] Question bank currently contains 100 questions (Animals 16, Dinosaurs 14, Space 17, Geography 18, Vehicles 18, Everyday Objects 17), not the 500-question target.
-- [x] Selected records checked against authoritative sources; CH-47 rotor measurement corrected. See `docs/FACT-CHECK-REPORT.md`.
-- [ ] Full source-by-source verification of all 100 records remains outstanding; many legacy records still cite Wikipedia and some subjects are near-duplicates.
-- [ ] Privacy and Terms copy still needs appropriate review.
-- [ ] Confirm live sitemap, canonicals and Google Search Console after the user deploys.
-- [ ] Complete browser/device testing before production deployment.
+## Remaining before production launch
+- [ ] Question bank currently has 100 entries, not the planned 500.
+- [ ] Complete source-by-source verification of all 100 entries; current report documents selected checks only.
+- [ ] Review privacy and terms copy.
+- [ ] Manual physical-device touch, install and offline testing.
+- [ ] After deployment, verify live sitemap, canonicals and Google Search Console.
 
 ## Deployment
-**Not deployed.** The production website remains unchanged until the user chooses to deploy the reviewed branch.
+**Not deployed.** Live production remains unchanged until the owner chooses to merge and deploy.
