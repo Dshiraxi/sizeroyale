@@ -14,6 +14,7 @@
 - Set production Worker `SITE_URL` to `https://sizeroyale.fun` and configured preview-scoped variables.
 - Added browser smoke coverage for SEO routes, comparison controls, responsive overflow, PWA manifest/service-worker assets and runtime errors.
 - Added `docs/FACT-CHECK-REPORT.md` documenting selected source checks and remaining verification gaps.
+- Added `docs/QUESTION-DUPLICATE-AUDIT.md` with confirmed duplicate/overlap clusters and a stable-ID-safe cleanup policy.
 
 ### Preserved
 - Existing domain, route paths, architecture, REST API, SSE multiplayer, JSON storage, account flows, scoring formula, PWA and Wrangler deployment structure.
