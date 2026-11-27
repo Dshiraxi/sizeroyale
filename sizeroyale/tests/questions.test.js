@@ -2,8 +2,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { QUESTIONS, CATEGORIES } = require('../data/questions');
 
-test('question bank has at least 100 entries and unique stable IDs', () => {
-  assert.ok(QUESTIONS.length >= 100, 'question bank should contain at least 100 questions');
+test('question bank has at least 120 entries and unique stable IDs', () => {
+  assert.ok(QUESTIONS.length >= 120, 'question bank should contain at least 100 questions');
   const ids = QUESTIONS.map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length, 'question IDs must be unique');
 });
@@ -26,4 +26,26 @@ test('every question has a valid category, measurement and source URL', () => {
 test('question titles are unique after normalization', () => {
   const titles = QUESTIONS.map((q) => q.title.trim().toLocaleLowerCase());
   assert.equal(new Set(titles).size, titles.length, 'question titles should be distinguishable');
+});
+
+
+test('first curated expansion contains 20 uniquely identified sourced records', () => {
+  const expanded = QUESTIONS.filter((q) => q.id.startsWith('expansion-'));
+  assert.equal(expanded.length, 20, 'curated expansion batch should contain 20 records');
+  const ids = expanded.map((q) => q.id);
+  assert.equal(new Set(ids).size, ids.length, 'expansion IDs must be unique');
+  for (const q of expanded) {
+    const host = new URL(q.sourceUrl).hostname;
+    assert.ok(
+      host === 'science.nasa.gov' ||
+      host === 'www.nps.gov' ||
+      host === 'home.nps.gov' ||
+      host === 'ocean.si.edu' ||
+      host === 'www.airbus.com' ||
+      host === 'www.aircraft.airbus.com' ||
+      host === 'www.airbus.com' ||
+      host === 'www.airbus.com',
+      q.id + ' must cite an approved institution or manufacturer source'
+    );
+  }
 });
