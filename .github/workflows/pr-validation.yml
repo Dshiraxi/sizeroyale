@@ -1,0 +1,66 @@
+name: SizeRoyale PR validation
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: sizeroyale-pr-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  node-tests-and-worker-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sizeroyale
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run full Node test suite
+        run: npm test
+      - name: Validate Worker bundle without deploying
+        run: npx wrangler deploy --dry-run
+
+  browser-and-route-smoke:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sizeroyale
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium test runner
+        run: npm install --no-save --no-package-lock playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start local Worker preview
+        run: |
+          npx wrangler dev --local --ip 127.0.0.1 --port 8787 > /tmp/sizeroyale-wrangler.log 2>&1 &
+          echo $! > /tmp/sizeroyale-wrangler.pid
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8787/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/sizeroyale-wrangler.log
+          exit 1
+      - name: Test SEO routes, comparison controls and responsive layout
+        run: node tests/browser-smoke.mjs
+      - name: Upload browser screenshots and Worker logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sizeroyale-browser-qa
+          path: |
+            sizeroyale/test-artifacts/
+            /tmp/sizeroyale-wrangler.log

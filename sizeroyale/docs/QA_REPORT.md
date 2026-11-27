@@ -8,37 +8,36 @@
 | Two old project ZIPs | **Not attached – not inspected, nothing reused** |
 | SEO CSV exports | **Not attached – not inspected.** `docs/seo-keyword-map.csv` is built from the keyword lists in the prompt; all metrics are `unavailable` except 7 historical figures quoted in the prompt, which are flagged *unverified*. |
 
-## Automated tests (actually run): 22 / 22 passed (`npm test`)
-- **Scoring/units (12):** exact=1000, half/double=0, 10% over, 25% under, invalid input rejected, unit conversion, same score across units, question-bank integrity (unique ids/titles, source on every item, every category has easy/medium/hard), daily determinism.
-- **API (7):** SEO head tags/canonicals/sitemap/robots/404/path traversal, answers never sent with questions, server-side scoring ignores client score, validation (0, negative, NaN, huge, bad unit), signup/login/logout/session invalidation, duplicate-answer rejection, stats + global leaderboard, daily (same set, ordered, one attempt, 5,000 max, daily leaderboard, streak, guest restriction), contact form.
-- **Multiplayer (3):** create/join, full room, invalid code (404), expired room (410), started room (409), non-host start (403), bad token (403), ready gating, simultaneous submissions, duplicate submission (409), same questions for both players, server-provided deadline, early round end when all guessed, timer-expiry auto-advance with no guesses, refresh/reconnect, host departure → host transfer, rematch reset.
+## Automated tests (historical, before this branch): 22 / 22 passed (`npm test`)
+- Scoring/units (12): scoring, conversion, validation and question-bank integrity.
+- API (7): SEO, answers/scoring, accounts, daily challenge, contact.
+- Multiplayer (3): room lifecycle, readiness, timers and reconnect.
+- **Important:** this historical 22/22 result does not certify the current PR branch.
 
 ## Client-side checks
-- `node --check` on all client scripts: pass. Scripts load in a stubbed DOM without runtime errors.
-- **NOT tested:** real-browser rendering, visual match to the screenshots, mobile/tablet/desktop layouts, touch controls, slider/input interaction, animations, sound, PWA install, service worker offline. No browser was available in this environment. **Open the site yourself on phone + desktop and report anything that looks off.**
+- Historical client script syntax checks passed in the earlier build.
+- Real-browser rendering, visual match, mobile/tablet/desktop layouts, touch controls, slider/input interaction, animations, sound, PWA install and service-worker offline behavior have not been verified for this branch.
 
 ## Acceptance checklist
-- [x] Branding/logo (original crown + ruler SVG)
-- [~] Homepage follows the design direction – structure and colors follow the references, but art is **emoji + CSS**, not illustrated artwork; not visually verified
-- [x] Navigation (all routes registered; tested via server-rendered meta, not clicked in a browser)
-- [x] Six categories
-- [~] Verified question bank – **52 of 500 target** (Animals 8/100, Dinosaurs 7/60, Space 9/60, Geography 10/100, Vehicles 9/80, Everyday 9/100). Values are commonly published figures entered **without live web access**; every source URL must be re-checked before launch. Several are estimates (dinosaurs, Nile) and are labelled as such.
-- [x] Gameplay, scoring (server-authoritative), unit conversion
-- [x] Daily Challenge (UTC day), Unlimited Play (no repeats until pool exhausted, then reshuffle)
-- [x] Accounts (signup/login/logout, avatar, unit preference) – **password reset not implemented** (needs email)
-- [x] Profile, statistics, history – saved for signed-in users only; **guest results are not persisted**
-- [x] Leaderboards from real data
-- [x] Friends Battle: rooms, codes, invite link, WhatsApp, 1v1 and 2–4 players, ready, 5×20s rounds, live scores, server timer, tie-break, rematch, reconnect
-- [~] Mobile – bottom tab bar, drawer, 2-column category grid and 48 px controls implemented per the mobile mockup; **unverified on real devices**
-- [~] PWA – manifest, service worker, offline page. **Icons are SVG only; iOS/Android installability may need PNG 192/512 icons.**
-- [~] SEO – unique titles/descriptions, canonicals, OG, JSON-LD (WebSite, WebApplication, FAQPage, BreadcrumbList), sitemap, robots. **Page body is rendered client-side**; crawlers see title/meta/`<noscript>` text but not the full body. Pre-rendering (or Next.js) is the next step.
-- [x] CSV keyword analysis documented – **but from the prompt list only (no CSVs were attached)**
-- [~] Placeholder pages – none for promised features; Privacy/Terms are **drafts needing legal review**
-- [ ] Database schema / migrations / seed scripts for Postgres/Supabase – **not delivered** (JSON-file DB instead)
-- [ ] Next.js / Tailwind / Supabase stack – **not used** (no package access)
-- [ ] Rate limiting is in-memory per process; multiplayer rooms are in-memory (lost on restart, single instance only)
-- [ ] Multiplayer results are not saved to profiles/stats
-- [ ] Explore/Comparison pages expose the answers by design (public reference data) – a player could look answers up.
+- [x] Existing architecture, domain and route paths retained.
+- [x] Shared measurement-safe comparison helper added.
+- [x] Four focused comparison tests added.
+- [x] Worker route-specific SEO handler added.
+- [x] Preview-scoped Wrangler variables added after the Cloudflare build error described below.
+- [ ] Full test suite and Wrangler dry run for this branch.
+- [ ] Real-browser and device QA.
+- [ ] Expand and fact-check the question bank before launch.
 
-## Known spec note
-Spec example "≈10% error: 863 points": the exact formula gives 862.496 → **862** with `Math.round`. The formula was left unchanged; the test documents this.
+## Branch update – 27 November 2026
+- The four new comparison-helper tests passed independently (4/4).
+- The Cloudflare PR preview build failed because Wrangler required a `[previews.vars]` block for `SITE_URL`, `ROUND_SEC` and `REVEAL_SEC`.
+- Added preview-scoped values to `wrangler.toml`; the follow-up Cloudflare preview build completed successfully, uploaded the four changed frontend assets, and reported no active preview URL.
+- The dataset now contains 260 question records: the original 100 plus 160 sourced additions in `data/question-expansion.js` and `data/question-expansion-2.js` and `data/question-expansion-3.js` and `data/question-expansion-4.js` and `data/question-expansion-5.js` and `data/question-expansion-6.js` and `data/question-expansion-7.js` and `data/question-expansion-8.js`. Integrity tests check the minimum count, IDs/titles, categories, positive meter values, definitions, difficulty and HTTPS source URLs; focused tests check the 160 curated records' IDs and source-host provenance. This does not independently prove each measurement.
+- A selected-source fact check was added in `docs/FACT-CHECK-REPORT.md`. The 30.1 m CH-47 figure was corrected to identify Boeing's operating rotor length rather than overall helicopter length. The curated batches add NASA planetary moon diameters, NPS landmark dimensions, Smithsonian giant-squid measurements, and manufacturer aircraft dimensions from Airbus and Boeing, plus NASA/JPL satellite physical parameters.
+- Many legacy records still cite Wikipedia, and some records repeat the same subject/measurement with different wording. Full source-by-source review and distinct-fact cleanup remain outstanding; do not claim all 100 are independently verified.
+- PWA manifest/offline shell now matches the light theme; service worker cache is v10 and precaches `public/lib/comparison.js`. Chromium assertions for the manifest/cache passed in the last successful CI run; the new data/test commits trigger a fresh run.
+- Repeated question titles that failed the integrity test were disambiguated without changing measurement values or source URLs.
+- Latest full test suite: 26/26 passed; Wrangler Worker `deploy --dry-run` passed.
+- Chromium browser smoke tests passed: route-specific title/description/canonical/robots checks for five routes, unknown-route 404 + noindex, measurement-compatible comparison selectors, desktop/mobile no-horizontal-overflow and no uncaught page errors.
+- Desktop and mobile screenshots were captured; contrast and mobile selector layout were refined from the visual review.
+- No production deployment was performed.

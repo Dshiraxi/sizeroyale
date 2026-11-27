@@ -7,6 +7,8 @@ const path = require('path');
 const crypto = require('crypto');
 const { UNITS, toMeters, score } = require('./lib/scoring');
 const { QUESTIONS, CATEGORIES } = require('./data/questions');
+const { getActiveQuestions } = require('./data/question-policy');
+const ACTIVE_QUESTIONS = getActiveQuestions(QUESTIONS);
 const { ROUTES, FAQ } = require('./lib/seo');
 
 const PORT = Number(process.env.PORT || 3000);
@@ -87,7 +89,7 @@ const todayKey = (d = new Date()) => d.toISOString().slice(0, 10);
 function dailyQuestions(dateKey) {
   const rnd = mulberry32(seedFrom('sizeroyale-daily-' + dateKey));
   const cats = shuffle(CATEGORIES.map((c) => c.slug), rnd).slice(0, 5);
-  return cats.map((slug) => { const pool = QUESTIONS.filter((q) => q.category === slug).sort((a, b) => a.id.localeCompare(b.id)); return pool[Math.floor(rnd() * pool.length)]; });
+  return cats.map((slug) => { const pool = ACTIVE_QUESTIONS.filter((q) => q.category === slug).sort((a, b) => a.id.localeCompare(b.id)); return pool[Math.floor(rnd() * pool.length)]; });
 }
 function msToNextUtcDay() { const n = new Date(); return Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() + 1) - n.getTime(); }
 
@@ -133,10 +135,10 @@ function statsFor(uid) {
 const routes = [];
 const route = (method, pattern, fn) => routes.push({ method, re: new RegExp('^' + pattern.replace(/:(\w+)/g, '(?<$1>[^/]+)') + '$'), fn });
 
-route('GET', '/api/meta', async () => ({ categories: CATEGORIES.map((c) => Object.assign({}, c, { questions: QUESTIONS.filter((q) => q.category === c.slug).length })), totalQuestions: QUESTIONS.length, players: Object.keys(db.users).length, answers: db.history.length, faq: FAQ }));
+route('GET', '/api/meta', async () => ({ categories: CATEGORIES.map((c) => Object.assign({}, c, { questions: ACTIVE_QUESTIONS.filter((q) => q.category === c.slug).length })), totalQuestions: ACTIVE_QUESTIONS.length, players: Object.keys(db.users).length, answers: db.history.length, faq: FAQ }));
 const shortName = (t) => { const s = t.replace(/^(How (long|tall|deep|far|large) (is|was|can)|What is the (equatorial )?(diameter|wingspan) of)\s+(a |an |the )?/i, '').replace(/\?$/, '').replace(/ be$/, ''); return s.charAt(0).toUpperCase() + s.slice(1); };
 // Explore / comparison content. NOTE: this exposes the answers by design (they are published reference facts).
-route('GET', '/api/facts', async () => ({ facts: QUESTIONS.map((q) => ({ id: q.id, category: q.category, icon: q.icon, kind: q.kind, shortName: shortName(q.title), description: q.description, meters: q.meters, fact: q.fact, sourceName: q.sourceName, sourceUrl: q.sourceUrl })) }));
+route('GET', '/api/facts', async () => ({ facts: ACTIVE_QUESTIONS.map((q) => ({ id: q.id, category: q.category, icon: q.icon, kind: q.kind, shortName: shortName(q.title), description: q.description, meters: q.meters, fact: q.fact, sourceName: q.sourceName, sourceUrl: q.sourceUrl })) }));
 
 route('POST', '/api/auth/signup', async ({ req, res, body }) => {
   rateLimit(req, 'auth', 20, 600000);
@@ -174,7 +176,7 @@ route('GET', '/api/avatars', async () => ({ avatars: AVATARS }));
 route('GET', '/api/question', async ({ query }) => {
   const cat = query.get('cat'); const diff = query.get('diff');
   const seen = new Set((query.get('seen') || '').split(',').filter(Boolean));
-  let pool = QUESTIONS.filter((q) => (!cat || cat === 'all' || q.category === cat) && (!diff || diff === 'all' || q.difficulty === diff));
+  let pool = ACTIVE_QUESTIONS.filter((q) => (!cat || cat === 'all' || q.category === cat) && (!diff || diff === 'all' || q.difficulty === diff));
   if (!pool.length) throw new HttpError(404, 'No questions for that selection.');
   let fresh = pool.filter((q) => !seen.has(q.id)); let reshuffled = false;
   if (!fresh.length) { fresh = pool; reshuffled = true; }
@@ -356,7 +358,7 @@ route('POST', '/api/rooms/:code/start', async ({ params, body }) => {
   const act = activePlayers(r);
   if (act.length < 2) throw new HttpError(400, 'Need at least 2 players.');
   if (!act.every((x) => x.id === r.hostId || x.ready)) throw new HttpError(400, 'Everyone must be ready.');
-  const pool = QUESTIONS.filter((q) => r.category === 'all' || q.category === r.category);
+  const pool = ACTIVE_QUESTIONS.filter((q) => r.category === 'all' || q.category === r.category);
   r.qs = shuffle(pool, Math.random).slice(0, ROUNDS).map((q) => q.id);
   if (r.qs.length < ROUNDS) throw new HttpError(400, 'Not enough questions in that category.');
   r.state = 'playing'; r.round = 0; for (const x of r.players) { x.score = 0; x.errSum = 0; }

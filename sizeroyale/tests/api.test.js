@@ -7,6 +7,7 @@ process.env.DB_FILE = path.join(os.tmpdir(), 'sr-test-' + process.pid + '.json')
 process.env.ROUND_SEC = '3'; process.env.REVEAL_SEC = '1'; process.env.SITE_URL = 'https://example.test';
 const { server, dailyQuestions, todayKey } = require('../server');
 const { QUESTIONS } = require('../data/questions');
+const { getActiveQuestions } = require('../data/question-policy');
 const { score } = require('../lib/scoring');
 
 let base; test.before(async () => { await new Promise((r) => server.listen(0, r)); base = 'http://127.0.0.1:' + server.address().port; });
@@ -44,7 +45,7 @@ test('SEO: unique titles/descriptions, canonical, sitemap, robots, 404', async (
 test('static assets served and question endpoint hides answers', async () => {
   for (const f of ['/css/style.css', '/js/core.js', '/js/pages.js', '/js/mp.js', '/lib/scoring.js', '/manifest.webmanifest', '/sw.js', '/offline.html']) assert.equal((await call('GET', f)).status, 200, f);
   const q = await call('GET', '/api/question?cat=animals&diff=easy'); assert.equal(q.status, 200); stripOk(q.body.question); assert.equal(q.body.question.category, 'animals');
-  const m = await call('GET', '/api/meta'); assert.equal(m.body.categories.length, 6); assert.equal(m.body.totalQuestions, QUESTIONS.length);
+  const m = await call('GET', '/api/meta'); assert.equal(m.body.categories.length, 6); assert.equal(m.body.totalQuestions, getActiveQuestions(QUESTIONS).length);
 });
 
 test('question exhaustion triggers reshuffle', async () => {
