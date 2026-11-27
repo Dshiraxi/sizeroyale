@@ -20,8 +20,8 @@
 - [x] Latest CI run: https://github.com/Dshiraxi/sizeroyale/actions/runs/45992337889
 
 ## Remaining before production launch
-- [ ] Question bank currently has 100 entries, not the planned 500.
-- [ ] Complete source-by-source verification of all 100 entries; current report documents selected checks only.
+- [ ] Question bank currently has 120 entries; the target of 500 is not yet reached.
+- [ ] Continue source-by-source verification; the first 20 additions have agency/institution/manufacturer citations, but legacy records still need review and near-duplicates need cleanup.
 - [ ] Review privacy and terms copy.
 - [ ] Manual physical-device touch, install and offline testing.
 - [ ] After deployment, verify live sitemap, canonicals and Google Search Console.
