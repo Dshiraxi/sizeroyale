@@ -32,10 +32,10 @@
 - The four new comparison-helper tests passed independently (4/4).
 - The Cloudflare PR preview build failed because Wrangler required a `[previews.vars]` block for `SITE_URL`, `ROUND_SEC` and `REVEAL_SEC`.
 - Added preview-scoped values to `wrangler.toml`; the follow-up Cloudflare preview build completed successfully, uploaded the four changed frontend assets, and reported no active preview URL.
-- The dataset contains 100 question records. Three new integrity tests check count, IDs/titles, categories, positive meter values, definitions, difficulty and HTTPS source URLs. This does not independently prove each measurement.
-- A selected-source fact check was added in `docs/FACT-CHECK-REPORT.md`. The 30.1 m CH-47 figure was corrected to identify Boeing's operating rotor length rather than overall helicopter length.
+- The dataset now contains 120 question records: the prior 100 plus 20 sourced additions in `data/question-expansion.js`. Integrity tests check the minimum count, IDs/titles, categories, positive meter values, definitions, difficulty and HTTPS source URLs; a focused test checks the 20 new records' IDs and source-host provenance. This does not independently prove each measurement.
+- A selected-source fact check was added in `docs/FACT-CHECK-REPORT.md`. The 30.1 m CH-47 figure was corrected to identify Boeing's operating rotor length rather than overall helicopter length. The new batch adds NASA moon diameters, NPS landmark dimensions, Smithsonian giant-squid measurements and Airbus aircraft dimensions.
 - Many legacy records still cite Wikipedia, and some records repeat the same subject/measurement with different wording. Full source-by-source review and distinct-fact cleanup remain outstanding; do not claim all 100 are independently verified.
-- PWA manifest/offline shell now matches the light theme; service worker cache is v10 and precaches `public/lib/comparison.js`. Chromium assertions for the manifest/cache are awaiting the latest CI rerun.
+- PWA manifest/offline shell now matches the light theme; service worker cache is v10 and precaches `public/lib/comparison.js`. Chromium assertions for the manifest/cache passed in the last successful CI run; the new data/test commits trigger a fresh run.
 - Repeated question titles that failed the integrity test were disambiguated without changing measurement values or source URLs.
 - Latest full test suite: 26/26 passed; Wrangler Worker `deploy --dry-run` passed.
 - Chromium browser smoke tests passed: route-specific title/description/canonical/robots checks for five routes, unknown-route 404 + noindex, measurement-compatible comparison selectors, desktop/mobile no-horizontal-overflow and no uncaught page errors.
