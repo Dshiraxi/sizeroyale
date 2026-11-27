@@ -34,4 +34,4 @@ The original data file contains repeated subject/measurement facts under differe
 
 ## Current status
 
-The bank has reached 180 records after four 20-record source-backed additions. Batch 4 adds 20 NASA/JPL satellite dimensions with explicit mean-radius/equivalent-diameter qualifications. Batch 3 adds NPS-listed Statue of Liberty component dimensions and Boeing 777/767 technical dimensions. This document flags confirmed overlap examples; it does **not** claim the entire 140-record bank has been exhaustively deduplicated or fact-checked.
+The bank has reached 200 records after five 20-record source-backed additions. Batch 5 adds NOAA, Smithsonian National Zoo and NPS animal dimensions with qualifiers for range, sex and measurement boundaries. Batch 4 adds 20 NASA/JPL satellite dimensions with explicit mean-radius/equivalent-diameter qualifications. Batch 3 adds NPS-listed Statue of Liberty component dimensions and Boeing 777/767 technical dimensions. This document flags confirmed overlap examples; it does **not** claim the entire 140-record bank has been exhaustively deduplicated or fact-checked.
