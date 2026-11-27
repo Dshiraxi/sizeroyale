@@ -8,7 +8,7 @@
 - Added `public/lib/comparison.js` with shared measurement compatibility, comparison and pair-generation helpers; wired the comparison page to it.
 - Comparison selectors now restrict choices to the same measurement type and a different item. Incompatible pairs are rejected.
 - Added comparison and question-bank integrity tests; disambiguated repeated question titles without changing their measurement values.
-- Expanded the bank from 100 to 220 with six batches of 20 source-backed records: NASA/NPS/Smithsonian/Airbus in batch 1, and Boeing/Airbus/NASA-JPL in batch 2. Batch files are `data/question-expansion.js` and `data/question-expansion-2.js` and `data/question-expansion-3.js` and `data/question-expansion-4.js` and `data/question-expansion-5.js` and `data/question-expansion-6.js`; integrity tests check count, stable IDs and source hosts.
+- Expanded the bank from 100 to 240 with seven batches of 20 source-backed records: NASA/NPS/Smithsonian/Airbus in batch 1, and Boeing/Airbus/NASA-JPL in batch 2. Batch files are `data/question-expansion.js` and `data/question-expansion-2.js` and `data/question-expansion-3.js` and `data/question-expansion-4.js` and `data/question-expansion-5.js` and `data/question-expansion-6.js` and `data/question-expansion-7.js`; integrity tests check count, stable IDs and source hosts.
 - Corrected the CH-47 Chinook 30.1 m entry to describe Boeing's operating rotor length, not aircraft fuselage length, and linked to Boeing.
 - Added route-specific Worker SEO metadata/schema from `lib/seo.js`; unknown HTML routes return 404/noindex.
 - Set production Worker `SITE_URL` to `https://sizeroyale.fun` and configured preview-scoped variables.
