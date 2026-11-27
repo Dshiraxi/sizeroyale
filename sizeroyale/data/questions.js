@@ -161,4 +161,6 @@ const CATEGORIES = [
   { slug: 'everyday-objects', name: 'Everyday Objects', short: 'Everyday Objects', target: 100, path: '/everyday-objects', icon: '🏀', grad: 'linear-gradient(145deg,#c47a12,#3a2305)', desc: 'Balls, cards and paper – familiar things you may still misjudge.' },
 ];
 
+Q.push(...require('./question-expansion'));
+
 module.exports = { QUESTIONS: Q, CATEGORIES };
