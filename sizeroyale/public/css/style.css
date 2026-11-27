@@ -393,3 +393,21 @@ body::before{display:none}
 .drawer{background:linear-gradient(180deg,#fff,#F3F8FD);border-left:1px solid rgba(37,99,235,.14)}
 .compare-feedback{background:#F5F9FE}
 .cmpbar .tr{background:#E6EEF8}
+
+
+/* Light-theme contrast fixes found during automated browser QA */
+.compare-level{background:#FFFFFF;color:#17324F;border-color:rgba(37,99,235,.22)}
+.compare-level small{color:#64748B}
+.compare-level.active{background:#E8F1FF;color:#17324F;border-color:#2563EB}
+.field input,.field textarea,.field select,
+.guessrow input[type=number]{background:#FFFFFF;color:#17324F;border:1px solid rgba(37,99,235,.24)}
+.field input::placeholder,.field textarea::placeholder{color:#64748B}
+.unit-toggle button{background:#EAF1F8;color:#17324F}
+.unit-toggle button.sel{background:linear-gradient(135deg,#3B82F6,#1D4ED8);color:#FFFFFF}
+.footer b{color:#17324F!important}
+.footer nav a{color:#52657D}
+.footer nav a:hover{color:#2563EB}
+.nav-desktop a{white-space:nowrap;flex-shrink:0}
+@media(max-width:520px){
+  .field input,.field textarea,.field select{font-size:16px}
+}
