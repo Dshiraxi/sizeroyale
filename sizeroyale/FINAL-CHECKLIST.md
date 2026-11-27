@@ -9,19 +9,17 @@
 - [x] Changes remain on `upgrade/route-seo-light-theme`; PR #2 is open and draft.
 - [x] No merge or production deployment performed.
 
-## Automated checks — latest run passed
-- [x] Node test suite: **29/29 passed**.
-- [x] Wrangler Worker `deploy --dry-run`: passed; no deployment.
-- [x] Chromium browser/route smoke: passed.
-- [x] SEO metadata on home, comparison, animals, FAQ and profile routes; unknown route 404 + noindex.
-- [x] Comparison selector compatibility, distinct choices and source output.
-- [x] Desktop/mobile horizontal-overflow and uncaught-error checks.
-- [x] PWA manifest theme, service-worker cache version and comparison helper precache assertions.
-- [x] Latest CI run: https://github.com/Dshiraxi/sizeroyale/actions/runs/45992337889
+## Automated checks
+- [x] Previous successful CI: 29/29 Node tests, Wrangler dry-run, and Chromium route/browser smoke.
+- [ ] Re-run checks after the current duplicate-audit documentation commits.
+- [x] Automated tests cover SEO routes, comparison compatibility, responsive overflow, PWA assets and runtime errors.
+- [x] Previous CI run: https://github.com/Dshiraxi/sizeroyale/actions/runs/45992337889
 
 ## Remaining before production launch
-- [ ] Question bank currently has 120 entries; the target of 500 is not yet reached.
-- [ ] Continue source-by-source verification; the 160 additions have agency/institution/manufacturer/space-agency/wildlife-institution/infrastructure-authority citations, but legacy records still need review and near-duplicates need cleanup.
+- [x] Question bank contains 260 records (100 legacy + 160 expansion records); target of 500 is not yet reached.
+- [ ] Complete entity + measurement + definition duplicate audit. The first scan is documented in docs/QUESTION-DUPLICATE-AUDIT.md; it is a candidate list, not a completed deduplication.
+- [ ] Verify source pages and measurement values for legacy records; citation URLs alone do not prove the data.
+- [ ] Add compatibility-safe stable IDs / historical lookup protection before retiring any question.
 - [ ] Review privacy and terms copy.
 - [ ] Manual physical-device touch, install and offline testing.
 - [ ] After deployment, verify live sitemap, canonicals and Google Search Console.
