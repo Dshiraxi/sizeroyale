@@ -42,3 +42,11 @@
 
 ## Known spec note
 Spec example "≈10% error: 863 points": the exact formula gives 862.496 → **862** with `Math.round`. The formula was left unchanged; the test documents this.
+
+
+## Branch update – 27 November 2026
+- Added four comparison-helper tests and a shared helper at `public/lib/comparison.js`.
+- These four new tests were run independently in an isolated Node test harness and passed (4/4).
+- The Worker SEO handler and comparison UI were updated on branch `upgrade/route-seo-light-theme`.
+- The full repository suite, Wrangler build/dry run and browser/device checks have **not** been run for this branch. The earlier 22/22 result above is historical and does not certify the new branch.
+- The dataset remains 52 questions; source verification and expansion to the 500-question target remain outstanding.
