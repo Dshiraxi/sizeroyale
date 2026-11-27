@@ -13,7 +13,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Corrections made in this pass
 
-- CH-47 Chinook: the 30.1 m Boeing figure is **“Length of Rotors While Operating”**, not the helicopter fuselage/overall vehicle length. The question now identifies it as operating rotor length, changes the measurement kind to `Rotor span`, explains the measurement boundary and cites Boeing directly:
+- CH-47 Chinook: the 30.1 m Boeing figure is **“Length of Rotors While Operating”**, not the helicopter fuselage/overall vehicle length. The question now identifies it as operating rotor length, changes the measurement kind to `Rotor length`, explains the measurement boundary and cites Boeing directly:
   https://www.boeing.com/defense/military-rotorcraft/h-47-chinook
 
 ## Selected source checks completed
