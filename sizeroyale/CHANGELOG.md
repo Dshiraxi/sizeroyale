@@ -24,3 +24,11 @@
 - Latest GitHub Actions run: **SUCCESS** — 29/29 Node tests, Wrangler `deploy --dry-run`, and Chromium browser/route smoke tests all passed.
 - Run: https://github.com/Dshiraxi/sizeroyale/actions/runs/45992337889
 - The automated checks do not replace physical-device PWA/offline testing or complete factual verification of every question.
+
+
+### Duplicate-selection safety pass — 27 November 2026
+- Added `data/question-policy.js` with 16 same-subject/measurement candidate IDs retired from newly generated rounds.
+- Server now uses the active pool for random, daily, facts/meta counts and fresh multiplayer rounds; the full question map remains intact for historical result lookup.
+- No question data rows were deleted and no stable IDs were changed.
+- Added a regression test for retired-ID retention and active-pool count; updated the duplicate audit and release checklist.
+- Complete bank: 260 records; active fresh-round pool: 244. The 500 active, verified-question target remains open.
