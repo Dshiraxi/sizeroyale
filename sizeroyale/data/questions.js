@@ -9,9 +9,7 @@
  */
 const Q = [];
 const W = (p) => 'https://en.wikipedia.org/wiki/' + p;
-let n = {};
 function add(id, cat, icon, kind, title, description, meters, difficulty, fact, sourceName, sourceUrl) {
-  n[cat] = (n[cat] || 0) + 1;
   Q.push({
     id,
     category: cat, icon, kind, title, description, meters, difficulty, fact, sourceName, sourceUrl,
