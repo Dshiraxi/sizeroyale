@@ -5,7 +5,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 200 question records are now present: the original 100 plus five curated 20-record expansion batches.
+- 220 question records are now present: the original 100 plus six curated 20-record expansion batches.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
 - The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
@@ -30,6 +30,10 @@ Added 20 satellite diameter questions using NASA/JPL physical-parameter tables a
 ## Fifth curated expansion (20 records)
 
 Added 20 wildlife size questions sourced from NOAA Fisheries, Smithsonian’s National Zoo and the National Park Service. Definitions state whether the value is a maximum, upper end of a published range, sex-specific average, body-only length or tail/component length. Because biological size varies, these questions use the stated source bounds rather than claiming universal exact sizes.
+
+## Sixth curated expansion (20 records)
+
+Added 20 marine-animal length questions from NOAA Fisheries technical/species references. Values are explicitly described as reported maxima, sex-specific maxima or upper ends of source ranges; foot-to-metre conversions are rounded to two decimals. This batch expands beyond spacecraft and aircraft into marine wildlife, while the duplicate report remains a separate pending cleanup.
 
 ## Corrections made in this pass
 
