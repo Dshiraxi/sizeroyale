@@ -5,7 +5,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 180 question records are now present: the original 100 plus four curated 20-record expansion batches.
+- 200 question records are now present: the original 100 plus five curated 20-record expansion batches.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
 - The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
@@ -26,6 +26,10 @@ Added 10 component dimensions from the National Park Service Statue of Liberty s
 ## Fourth curated expansion (20 records)
 
 Added 20 satellite diameter questions using NASA/JPL physical-parameter tables and NASA's Pluto system fact sheet. For irregular small moons, the questions state when the value is a volume-equivalent diameter derived from mean radius or an approximate published dimension. These are useful measurement distinctions, but they are not a substitute for full cross-bank deduplication.
+
+## Fifth curated expansion (20 records)
+
+Added 20 wildlife size questions sourced from NOAA Fisheries, Smithsonian’s National Zoo and the National Park Service. Definitions state whether the value is a maximum, upper end of a published range, sex-specific average, body-only length or tail/component length. Because biological size varies, these questions use the stated source bounds rather than claiming universal exact sizes.
 
 ## Corrections made in this pass
 
