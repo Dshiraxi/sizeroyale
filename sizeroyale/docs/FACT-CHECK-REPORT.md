@@ -5,11 +5,15 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 100 question records are currently present.
+- 120 question records are now present: the original 100 plus a first 20-record curated expansion batch.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
-- The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the bank as 100 distinct facts.
-- A large share of the existing citations point to Wikipedia pages. Those are useful starting references, but are not primary sources. This pass does not certify every one of the 100 values. The older records that still cite Wikipedia remain flagged for a source-by-source audit.
+- The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
+- A large share of the existing citations point to Wikipedia pages. Those are useful starting references, but are not primary sources. This pass does not certify every one of the original 100 values. The older records that still cite Wikipedia remain flagged for a source-by-source audit.
+
+## First curated expansion (20 records)
+
+Added 20 questions using NASA mission reference data, National Park Service monument measurements, Smithsonian Ocean giant-squid measurements, and Airbus published aircraft specifications. Each entry states its measurement boundary/approximation and links the source. New records are isolated in `data/question-expansion.js` and appended to the existing bank; no existing scores, APIs or question values were changed by this addition. Automated checks now require 120 total records and verify the 20 expansion IDs and approved source hosts. This validates structure and source provenance, not an independent remeasurement of every source value.
 
 ## Corrections made in this pass
 
