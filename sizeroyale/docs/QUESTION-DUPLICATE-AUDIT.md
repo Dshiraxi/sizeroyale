@@ -103,3 +103,14 @@ Candidate IDs from the legacy pairs above:
 | Size-5 football diameter | everyday-objects-002 | everyday-objects-016 |
 | Credit/bank card length | everyday-objects-004 | everyday-objects-017 |
 | Tennis ball diameter | everyday-objects-006 | everyday-objects-014 |
+
+
+## Disposition pass completed on 27 November 2026
+
+The 16 same-subject / same-measurement candidates in the first scan have now been assigned a conservative new-round policy. Their original question records and stable IDs remain in the complete bank so previously saved results and direct historical lookup are not broken. They are excluded only from fresh question selection, daily challenge generation, and new multiplayer rounds by `data/question-policy.js`.
+
+- **Excluded from new rounds:** `animals-013`, `animals-016`, `dinosaurs-011`, `dinosaurs-012`, `dinosaurs-013`, `space-004`, `space-014`, `space-016`, `space-017`, `geography-015`, `geography-016`, `geography-017`, `vehicles-018`, `everyday-objects-014`, `everyday-objects-016`, `everyday-objects-017`.
+- **Kept for new rounds:** the corresponding canonical legacy entries, except Mars: legacy `space-004` calls 6,779 km an equatorial diameter, although that stored value is the mean diameter. It is retired; the expansion `space-015` clearly identifies the mean diameter.
+- **No rows deleted, no IDs renumbered, and no historical records erased.**
+
+Automated regression coverage verifies that every retired ID still exists in the full question bank, none is in the active pool, and the policy currently contains exactly 16 IDs. The bank remains 260 records; the active pool is 244. This is a duplicate-selection cleanup, **not** a claim that every remaining record has been independently fact-checked or that the 500-question goal is complete.
