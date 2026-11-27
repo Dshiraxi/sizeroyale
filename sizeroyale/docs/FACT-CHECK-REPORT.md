@@ -5,7 +5,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 160 question records are now present: the original 100 plus three curated 20-record expansion batches.
+- 180 question records are now present: the original 100 plus four curated 20-record expansion batches.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
 - The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
@@ -22,6 +22,10 @@ Added 10 Boeing/Airbus aircraft dimensions and 10 planetary satellite diameters.
 ## Third curated expansion (20 records)
 
 Added 10 component dimensions from the National Park Service Statue of Liberty statistics table and 10 Boeing 777/767 aircraft dimensions from Boeing's published technical specification pages. The question definitions distinguish component/variant measurements rather than presenting them as one generic height or length.
+
+## Fourth curated expansion (20 records)
+
+Added 20 satellite diameter questions using NASA/JPL physical-parameter tables and NASA's Pluto system fact sheet. For irregular small moons, the questions state when the value is a volume-equivalent diameter derived from mean radius or an approximate published dimension. These are useful measurement distinctions, but they are not a substitute for full cross-bank deduplication.
 
 ## Corrections made in this pass
 
