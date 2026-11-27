@@ -5,7 +5,7 @@ Branch: `upgrade/route-seo-light-theme`
 
 ## Dataset inventory
 
-- 120 question records are now present: the original 100 plus a first 20-record curated expansion batch.
+- 140 question records are now present: the original 100 plus two curated 20-record expansion batches.
 - Every record has a positive canonical meter value, measurement kind, definition, named source and HTTPS source URL.
 - Question IDs and normalized question titles are checked for uniqueness by `tests/questions.test.js`.
 - The bank still contains a number of repeated subjects/near-duplicate facts (for example, multiple wordings for the same dinosaur or planet measurement). Unique titles do not make those independent facts. These should be consolidated or replaced with separately sourced facts before describing the entire bank as 120 distinct facts.
@@ -14,6 +14,10 @@ Branch: `upgrade/route-seo-light-theme`
 ## First curated expansion (20 records)
 
 Added 20 questions using NASA mission reference data, National Park Service monument measurements, Smithsonian Ocean giant-squid measurements, and Airbus published aircraft specifications. Each entry states its measurement boundary/approximation and links the source. New records are isolated in `data/question-expansion.js` and appended to the existing bank; no existing scores, APIs or question values were changed by this addition. Automated checks now require 120 total records and verify the 20 expansion IDs and approved source hosts. This validates structure and source provenance, not an independent remeasurement of every source value.
+
+## Second curated expansion (20 records)
+
+Added 10 Boeing/Airbus aircraft dimensions and 10 planetary satellite diameters. Aircraft values are sourced from manufacturer technical tables; satellite mean diameters are calculated as twice the mean radii in NASA/JPL's physical-parameter tables, with the calculation and irregular-shape caveat in the question definition. These are source-backed additions; the project still needs a full cross-bank duplicate review and fact-by-fact verification of legacy records.
 
 ## Corrections made in this pass
 
