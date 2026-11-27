@@ -32,5 +32,9 @@
 - The four new comparison-helper tests passed independently (4/4).
 - The Cloudflare PR preview build failed because Wrangler required a `[previews.vars]` block for `SITE_URL`, `ROUND_SEC` and `REVEAL_SEC`.
 - Added preview-scoped values to `wrangler.toml`; the follow-up Cloudflare preview build completed successfully, uploaded the four changed frontend assets, and reported no active preview URL.
-- The dataset remains 52 questions; source verification and expansion to the 500-question target remain outstanding.
+- The dataset contains 100 questions after counting the current `add()` entries; source verification and expansion to the 500-question target remain outstanding.
+- Repeated question titles that failed the integrity test were disambiguated without changing measurement values or source URLs.
+- Latest full test suite: 26/26 passed; Wrangler Worker `deploy --dry-run` passed.
+- Chromium browser smoke tests passed: route-specific title/description/canonical/robots checks for five routes, unknown-route 404 + noindex, measurement-compatible comparison selectors, desktop/mobile no-horizontal-overflow and no uncaught page errors.
+- Desktop and mobile screenshots were captured; contrast and mobile selector layout were refined from the visual review.
 - No production deployment was performed.
