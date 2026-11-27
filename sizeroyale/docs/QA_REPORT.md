@@ -31,6 +31,6 @@
 ## Branch update – 27 November 2026
 - The four new comparison-helper tests passed independently (4/4).
 - The Cloudflare PR preview build failed because Wrangler required a `[previews.vars]` block for `SITE_URL`, `ROUND_SEC` and `REVEAL_SEC`.
-- Added preview-scoped values to `wrangler.toml`; the follow-up Cloudflare build result is pending.
+- Added preview-scoped values to `wrangler.toml`; the follow-up Cloudflare preview build completed successfully, uploaded the four changed frontend assets, and reported no active preview URL.
 - The dataset remains 52 questions; source verification and expansion to the 500-question target remain outstanding.
 - No production deployment was performed.
