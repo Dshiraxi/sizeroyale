@@ -15,7 +15,7 @@
 ## Checks completed
 - [x] New comparison helper tests: 4/4 passed in an isolated Node test harness.
 - [x] Worker module syntax check: passed.
-- [ ] Confirm the Cloudflare preview build passes after the preview-variable fix.
+- [x] Cloudflare preview command completed successfully after the preview-variable fix (the preview has no active URL).
 - [ ] Run the complete repository `npm test` suite after checking out this branch.
 - [ ] Run the project Wrangler build / dry run using the repository's local Wrangler version.
 - [ ] Test route metadata for `/`, `/size-comparison`, `/animals`, `/faq`, `/profile`, and an unknown URL.
