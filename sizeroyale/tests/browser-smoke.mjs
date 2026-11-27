@@ -31,6 +31,17 @@ const pageErrors = [];
 page.on('pageerror', (error) => pageErrors.push(error.message));
 
 try {
+  const manifestResponse = await fetch(base + '/manifest.webmanifest');
+  assert.equal(manifestResponse.status, 200, 'PWA manifest should load');
+  const manifest = await manifestResponse.json();
+  assert.equal(manifest.theme_color, '#F5F8FC', 'PWA theme color should match the light theme');
+  assert.equal(manifest.background_color, '#F5F8FC', 'PWA background should match the light theme');
+  const swResponse = await fetch(base + '/sw.js');
+  assert.equal(swResponse.status, 200, 'service worker should load');
+  const swText = await swResponse.text();
+  assert.match(swText, /sizeroyale-v10/, 'service worker cache version should be bumped');
+  assert.match(swText, /\/lib\/comparison\.js/, 'offline shell should precache the comparison helper');
+
   const home = await checkSeo('/', { title: 'Free Size Comparison Game Online' });
   assert.match(home, /"@type":"WebApplication"/);
   await checkSeo('/size-comparison', { title: 'Size Comparison Game' });
