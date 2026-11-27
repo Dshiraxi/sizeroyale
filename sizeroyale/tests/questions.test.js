@@ -64,3 +64,12 @@ test('curated expansions contain 160 uniquely identified sourced records', () =>
     );
   }
 });
+
+
+test('legacy question IDs and title mapping remain unchanged for saved history', () => {
+  const expected = require('./fixtures/legacy-question-ids.json');
+  const legacy = QUESTIONS.filter((q) => !q.id.startsWith('expansion-'));
+  assert.equal(legacy.length, 100, 'legacy bank size should remain explicit');
+  const actual = Object.fromEntries(legacy.map((q) => [q.id, q.title]));
+  assert.deepEqual(actual, expected, 'legacy question IDs/titles must not shift during cleanup');
+});
