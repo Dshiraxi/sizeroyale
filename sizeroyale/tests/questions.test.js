@@ -2,8 +2,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { QUESTIONS, CATEGORIES } = require('../data/questions');
 
-test('question bank has at least 220 entries and unique stable IDs', () => {
-  assert.ok(QUESTIONS.length >= 220, 'question bank should contain at least 220 questions');
+test('question bank has at least 240 entries and unique stable IDs', () => {
+  assert.ok(QUESTIONS.length >= 240, 'question bank should contain at least 220 questions');
   const ids = QUESTIONS.map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length, 'question IDs must be unique');
 });
@@ -29,9 +29,9 @@ test('question titles are unique after normalization', () => {
 });
 
 
-test('curated expansions contain 120 uniquely identified sourced records', () => {
+test('curated expansions contain 140 uniquely identified sourced records', () => {
   const expanded = QUESTIONS.filter((q) => q.id.startsWith('expansion-'));
-  assert.equal(expanded.length, 120, 'six curated batches should contain 120 records');
+  assert.equal(expanded.length, 140, 'seven curated batches should contain 140 records');
   const ids = expanded.map((q) => q.id);
   assert.equal(new Set(ids).size, ids.length, 'expansion IDs must be unique');
   for (const q of expanded) {
@@ -51,7 +51,8 @@ test('curated expansions contain 120 uniquely identified sourced records', () =>
       host === 'nationalzoo.si.edu' ||
       host === 'www.nationalzoo.si.edu' ||
       host === 'media.fisheries.noaa.gov' ||
-      host === 'www.greateratlantic.fisheries.noaa.gov',
+      host === 'www.greateratlantic.fisheries.noaa.gov' ||
+      host === 'cd2-www.fisheries.noaa.gov',
       q.id + ' must cite an approved institution or manufacturer source'
     );
   }
