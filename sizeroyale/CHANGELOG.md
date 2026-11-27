@@ -9,6 +9,7 @@
 - Updated the Size Comparison page to use the shared helper.
 - The manual comparison selectors now restrict the second item to the same measurement type and a different item. Incompatible measurements are rejected by the comparison helper.
 - Added four focused Node tests for measurement compatibility and pair generation.
+- Corrected repeated question titles in the existing dataset without changing any measurement values or source URLs.
 - Updated the Cloudflare Worker to use the same route metadata as `lib/seo.js`, so every known HTML route receives route-specific metadata and structured data.
 - Unknown HTML routes now receive a 404 response and noindex metadata.
 - Set the production Worker `SITE_URL` variable to `https://sizeroyale.fun`.
